@@ -1,0 +1,37 @@
+Youtube
+Авторизация, Регистрация
+Загрузка видео
+Слайдер
+Поиск
+Лайки/Дизлайки, Просмотры
+Плеер
+Комментарии
+Творческая студия
+  Список видео
+  Редактор видео
+
+Страницы
+ Главная
+ Канал
+ Творческая студия
+ Видео
+
+Под вопросом
+ Эпизоды
+ Вход через соц сети
+
+Front-end
+ React/Next.js (routing, ssg, seo, image component)
+ Axios/React Query (search)
+ AuthContext
+ Tailwind под вопросом пока
+ TypeScript
+ React Hook Form
+
+Back-end
+ Nest.js
+ MongoDb мб и Postgresql, ну может быть тяжко с ним
+ Mongoose если Postgresql будет, то TypeOrm
+ JWT
+
+
