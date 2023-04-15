@@ -1,4 +1,4 @@
-Youtube
+﻿Youtube
 Авторизация, Регистрация
 Загрузка видео
 Слайдер
@@ -16,7 +16,7 @@ Youtube
  Творческая студия
  Видео
 
-Под вопросом
+Под вопросом(Доп функционал)
  Эпизоды
  Вход через соц сети
 
@@ -30,8 +30,8 @@ Front-end
 
 Back-end
  Nest.js
- MongoDb мб и Postgresql, ну может быть тяжко с ним
- Mongoose если Postgresql будет, то TypeOrm
+ Postgresql
+ TypeOrm
  JWT
 
 

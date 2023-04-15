@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { JwtModuleOptions } from '@nestjs/jwt';
 
 export const getTypeOrmConfig = async (
 	config: ConfigService
@@ -14,4 +15,10 @@ export const getTypeOrmConfig = async (
 	synchronize: true,
 	autoLoadEntities: true,
 	logging: true
+});
+
+export const getJWTConfig = async (
+	config: ConfigService
+): Promise<JwtModuleOptions> => ({
+	secret: config.get<string>('JWT_SECRET')
 });

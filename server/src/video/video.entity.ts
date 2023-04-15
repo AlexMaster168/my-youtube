@@ -6,10 +6,10 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm';
-import { UserModel } from '../user/user.model';
-import { CommentModel } from '../comment/comment.model';
+import { User } from '../user/user.entity';
+import { Comment } from '../comment/comment.entity';
 
-export class VideoModel {
+export class Video {
 	@PrimaryGeneratedColumn()
 	id: number;
 
@@ -43,9 +43,9 @@ export class VideoModel {
 	@Column()
 	thumbnailPath: string;
 
-	@ManyToOne(() => UserModel, (user) => user.videos)
-	user: UserModel;
+	// @ManyToOne(() => User, (user) => user.videos)
+	// users: User;
 
-	@OneToMany(() => CommentModel, (comment) => comment.video)
-	comments?: CommentModel[];
+	// @OneToMany(() => Comment, (comment) => comment.video)
+	// comments?: Comment[];
 }

@@ -6,11 +6,11 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm';
-import { VideoModel } from '../video/video.model';
-import { CommentModel } from '../comment/comment.model';
+import { Video } from '../video/video.entity';
+import { Comment } from '../comment/comment.entity';
 
 @Entity('user')
-export class UserModel {
+export class User {
 	@PrimaryGeneratedColumn()
 	id: number;
 
@@ -47,9 +47,12 @@ export class UserModel {
 	@Column()
 	avatarPath: string;
 
-	@OneToMany(() => VideoModel, (video) => video.user)
-	videos?: VideoModel[];
+	@Column({ default: '' })
+	refreshToken: string;
 
-	@OneToMany(() => CommentModel, (comment) => comment.user)
-	comments?: CommentModel[];
+	// @OneToMany(() => Video, (video) => video.users)
+	// videos?: Video[];
+
+	// @OneToMany(() => Comment, (comment) => comment.user)
+	// comments?: Comment[];
 }
