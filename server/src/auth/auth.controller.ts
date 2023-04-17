@@ -9,6 +9,7 @@ import {
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 import { RefreshDto } from './dto/refresh.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -16,7 +17,7 @@ export class AuthController {
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Post('register')
-	async register(@Body() dto: AuthDto): Promise<any> {
+	async register(@Body() dto: RegisterDto): Promise<any> {
 		const result = await this.authService.register(dto);
 		return {
 			message: 'Пользователь успешно зарегистрирован',

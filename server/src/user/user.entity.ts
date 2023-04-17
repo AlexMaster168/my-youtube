@@ -29,22 +29,22 @@ export class User {
 	@Column({ unique: true })
 	name: string;
 
-	@Column()
+	@Column({ nullable: true })
 	isVerified: string;
 
-	@Column()
+	@Column({ nullable: true })
 	subscribersCount: number;
 
-	@Column()
+	@Column({ nullable: true })
 	description: string;
 
-	@Column()
+	@Column({ nullable: true })
 	location: string;
 
-	@Column()
+	@Column({ nullable: true })
 	bannerPath: string;
 
-	@Column()
+	@Column({ nullable: true })
 	avatarPath: string;
 
 	@Column({ default: '' })
@@ -52,7 +52,7 @@ export class User {
 
 	// @OneToMany(() => Video, (video) => video.users)
 	// videos?: Video[];
-
+	//
 	// @OneToMany(() => Comment, (comment) => comment.user)
 	// comments?: Comment[];
 }

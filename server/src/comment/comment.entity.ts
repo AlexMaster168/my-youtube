@@ -22,8 +22,8 @@ export class Comment {
 	message: string;
 
 	// @ManyToOne(() => User, (user) => user.comments)
-	// user: User;
+	// user?: User;
 	//
 	// @ManyToOne(() => Video, (video) => video.comments)
-	// video: Video;
+	// video?: Video;
 }

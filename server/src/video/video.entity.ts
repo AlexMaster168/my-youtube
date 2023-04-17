@@ -45,7 +45,7 @@ export class Video {
 
 	// @ManyToOne(() => User, (user) => user.videos)
 	// users: User;
-
+	//
 	// @OneToMany(() => Comment, (comment) => comment.video)
 	// comments?: Comment[];
 }

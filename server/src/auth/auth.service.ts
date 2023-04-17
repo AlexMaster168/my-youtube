@@ -5,6 +5,7 @@ import { User } from '../user/user.entity';
 import { Repository } from 'typeorm';
 import { AuthDto } from './dto/auth.dto';
 import * as bcrypt from 'bcryptjs';
+import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
 		private readonly userRepo: Repository<User>
 	) {}
 
-	async register(dto: AuthDto): Promise<any> {
+	async register(dto: RegisterDto): Promise<any> {
 		const isUserExist = await this.userRepo.findOne({
 			where: { email: dto.email }
 		});
@@ -26,6 +27,7 @@ export class AuthService {
 		}
 		const newUser = new User();
 		newUser.email = dto.email;
+		newUser.name = dto.name;
 		newUser.password = await bcrypt.hash(dto.password, 10);
 		const savedUser = await this.userRepo.save(newUser);
 		const accessToken = this.generateAccessToken(savedUser.id);

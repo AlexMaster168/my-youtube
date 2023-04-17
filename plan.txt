@@ -24,7 +24,7 @@ Front-end
  React/Next.js (routing, ssg, seo, image component)
  Axios/React Query (search)
  AuthContext
- Tailwind под вопросом пока
+ Tailwind
  TypeScript
  React Hook Form
 
