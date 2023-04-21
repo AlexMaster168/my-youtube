@@ -1,13 +1,17 @@
 import React, { FC, PropsWithChildren } from 'react'
+import cn from 'classnames'
 import Sidebar from '@/components/layout/Sidebar'
-import Header from '@/components/layout/Header'
+import Header from '@/components/layout/Header/Header'
 import Head from 'next/head'
+import { useAuth } from '@/hooks/useAuth'
 
 interface LayoutProps {
 	title: string
 }
 
 const Layout: FC<PropsWithChildren<LayoutProps>> = ({ children, title }) => {
+	const { user } = useAuth()
+
 	return (
 		<>
 			<Head>
@@ -15,7 +19,11 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = ({ children, title }) => {
 			</Head>
 			<main id='youtube_main'>
 				<Sidebar />
-				<section className='content'>
+				<section
+					className={cn('content', {
+						'content-full': !user
+					})}
+				>
 					<Header />
 					<div className='content-wrapper'>{children}</div>
 				</section>
