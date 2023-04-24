@@ -1,5 +1,5 @@
 import React, { FC, forwardRef } from 'react'
-import { IInput } from '@/components/ui/input/input.interface'
+import { IInput } from './input.interface'
 import styles from './input.module.scss'
 
 const Input: FC = forwardRef<HTMLInputElement, IInput>(

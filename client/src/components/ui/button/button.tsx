@@ -1,7 +1,7 @@
 import React, { FC, PropsWithChildren } from 'react'
 import cn from 'classnames'
 import styles from './button.module.scss'
-import { IButton } from '@/components/ui/button/button.interface'
+import { IButton } from './button.interface'
 
 const Button: FC<PropsWithChildren<IButton>> = ({
 	children,

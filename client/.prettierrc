@@ -4,5 +4,16 @@
   "useTabs": true,
   "tabWidth": 2,
   "jsxSingleQuote": true,
-  "semi": false
+  "semi": false,
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "^@/components/(.*)$",
+    "^@/providers/(.*)$",
+    "^@/services/(.*)$",
+    "^@/images/(.*)$",
+    "^@/hooks/(.*)$",
+    "^../(.*)",
+    "^./(.*)",
+    "(.scss)$"
+  ]
 }
