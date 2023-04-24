@@ -1,14 +1,19 @@
-import React, { FC, PropsWithChildren } from 'react'
 import cn from 'classnames'
-import styles from './button.module.scss'
+import React, { FC, PropsWithChildren } from 'react'
 import { IButton } from './button.interface'
+import styles from './button.module.scss'
 
 const Button: FC<PropsWithChildren<IButton>> = ({
 	children,
 	className,
+	onClick,
 	...rest
 }) => {
-	return <button className={cn(styles.button, className)}>{children}</button>
+	return (
+		<button className={cn(styles.button, className)} onClick={onClick}>
+			{children}
+		</button>
+	)
 }
 
 export default Button

@@ -23,8 +23,14 @@
       "@/components/*": [
         "components/*"
       ],
+      "@/styles/*": [
+        "styles/*"
+      ],
       "@/images/*": [
         "images/*"
+      ],
+      "@/pages/*": [
+        "pages/*"
       ],
       "@/hooks/*": [
         "hooks/*"
