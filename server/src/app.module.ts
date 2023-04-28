@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { VideoModule } from './video/video.module';
-import { CommentModule } from './comment/comment.module';
-import { AuthModule } from './auth/auth.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
-import { getTypeOrmConfig } from './config';
+import { Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { VideoModule } from './video/video.module'
+import { CommentModule } from './comment/comment.module'
+import { AuthModule } from './auth/auth.module'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { UserModule } from './user/user.module'
+import { getTypeOrmConfig } from './config'
 
 @Module({
 	imports: [
@@ -21,4 +21,5 @@ import { getTypeOrmConfig } from './config';
 		AuthModule
 	]
 })
-export class AppModule {}
+export class AppModule {
+}

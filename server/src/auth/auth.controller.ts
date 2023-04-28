@@ -21,7 +21,7 @@ export class AuthController {
 		const result = await this.authService.register(dto);
 		return {
 			message: 'Пользователь успешно зарегистрирован',
-			data: result
+			result
 		};
 	}
 
@@ -32,7 +32,7 @@ export class AuthController {
 		const result = await this.authService.login(dto);
 		return {
 			message: 'Успешный вход в систему',
-			data: result
+			result
 		};
 	}
 

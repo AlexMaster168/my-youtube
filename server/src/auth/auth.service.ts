@@ -26,7 +26,13 @@ export class AuthService {
     const accessToken = this.generateAccessToken(savedUser.id);
     const refreshToken = this.generateRefreshToken(savedUser.id);
     await this.userRepo.update({ id: savedUser.id }, { refreshToken });
+    const user = {
+      id: savedUser.id,
+      name: savedUser.name,
+      email: savedUser.email,
+    };
     return {
+      user,
       accessToken,
       refreshToken,
     };
@@ -49,7 +55,12 @@ export class AuthService {
     const accessToken = this.generateAccessToken(existingUser.id);
     const refreshToken = this.generateRefreshToken(existingUser.id);
     await this.userRepo.update({ id: existingUser.id }, { refreshToken });
+    const user = {
+      id: existingUser.id,
+      email: existingUser.email,
+    };
     return {
+      user,
       accessToken,
       refreshToken,
     };

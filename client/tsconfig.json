@@ -35,6 +35,9 @@
       "@/hooks/*": [
         "hooks/*"
       ],
+      "@/http/*": [
+        "http/*"
+      ],
       "@/providers/*": [
         "providers/*"
       ],

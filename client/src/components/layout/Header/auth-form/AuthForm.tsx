@@ -1,8 +1,11 @@
 import React, { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FaUserCircle } from 'react-icons/fa'
+import { useMutation } from 'react-query'
 import Button from '@/components/ui/button/button'
 import Input from '@/components/ui/input/input'
+import { AuthService } from '@/services/auth/auth.service'
+import { useAuth } from '@/hooks/useAuth'
 import useOutside from '@/hooks/useOutside'
 import stylesIcons from '../icons/IconRight.module.scss'
 import styles from './AuthForm.module.scss'
@@ -20,8 +23,22 @@ const AuthForm: FC = () => {
 		mode: 'onChange'
 	})
 
+	const { setData } = useAuth()
+
+	const { mutate: login } = useMutation(
+		'login',
+		(data: IAuthField) => AuthService.login(data.email, data.password),
+		{
+			onSuccess(data) {
+				if (setData) {
+					setData(data)
+				}
+			}
+		}
+	)
+
 	const onSubmit: SubmitHandler<IAuthField> = (data) => {
-		console.log(`${type}`, data.email)
+		login(data)
 	}
 
 	return (
@@ -40,7 +57,6 @@ const AuthForm: FC = () => {
 									message: 'Min length should more 3 symbols'
 								}
 							})}
-							// @ts-ignore
 							placeholder='Name'
 							error={errors.name}
 						/>
@@ -53,7 +69,6 @@ const AuthForm: FC = () => {
 								message: 'Please enter a valid email address'
 							}
 						})}
-						// @ts-ignore
 						placeholder='Email'
 						error={errors.email}
 					/>
@@ -65,8 +80,8 @@ const AuthForm: FC = () => {
 								message: 'Min length should more 6 symbols'
 							}
 						})}
-						// @ts-ignore
-						placeholder='password'
+						type='password'
+						placeholder='Password'
 						error={errors.password}
 					/>
 					<div className={'mt-5 mb-1 text-center'}>

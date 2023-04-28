@@ -1,8 +1,15 @@
-/** @type {import('next').NextConfig} */
+const dotenv = require('dotenv')
+dotenv.config({ path: '.env' })
+
 const nextConfig = {
 	poweredByHeader: false,
 	env: {
-		APP_URL: 'localhost:3000'
+		CLIENT_PORT: process.env.CLIENT_PORT || 3000,
+		SERVER_PORT: process.env.SERVER_PORT || 5000
+	},
+	images: {
+		domains: ['localhost']
 	}
 }
+
 module.exports = nextConfig

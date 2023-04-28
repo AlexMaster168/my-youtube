@@ -6,29 +6,18 @@ import React, {
 	SetStateAction,
 	useState
 } from 'react'
+import { IAuthData } from '@/services/auth/auth.helper'
 
-interface IData {
-	user: {
-		id: string
-		email: string
-	} | null
-	refreshToken: string
-}
-
-interface IContext extends IData {
-	setData: Dispatch<SetStateAction<IData>> | null
+interface IContext extends IAuthData {
+	setData: Dispatch<SetStateAction<IAuthData>> | null
 }
 
 export const AuthContext = createContext<IContext>({} as IContext)
 
 const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-	const [data, setData] = useState<IData>({
-		// user: {
-		// 	id: '0',
-		// 	email: 'alex4185@ukr.net'
-		// },
+	const [data, setData] = useState<IAuthData>({
 		user: null,
-		refreshToken: ''
+		accessToken: ''
 	})
 
 	return (
