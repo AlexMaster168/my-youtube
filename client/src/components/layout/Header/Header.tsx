@@ -1,10 +1,7 @@
-import React, { FC } from 'react'
-import { BsPlusCircleFill } from 'react-icons/bs'
-import { FaUserCircle } from 'react-icons/fa'
 import Image from 'next/image'
-
-import Search from '@/images/common/search.svg'
+import React, { FC } from 'react'
 import IconsRight from '@/components/layout/Header/icons/IconsRight'
+import Search from '@/images/common/search.svg'
 
 const Header: FC = () => {
 	return (

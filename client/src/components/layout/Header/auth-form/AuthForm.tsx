@@ -23,7 +23,7 @@ const AuthForm: FC = () => {
 		mode: 'onChange'
 	})
 
-	const { setData } = useAuth()
+	const { user, setData } = useAuth()
 
 	const { mutate: login } = useMutation(
 		'login',
@@ -37,15 +37,34 @@ const AuthForm: FC = () => {
 		}
 	)
 
+	const { mutate: registration } = useMutation(
+		'registration',
+		(data: IAuthField) =>
+			AuthService.register(data.email, data.name, data.password),
+		{
+			onSuccess(data) {
+				if (setData) {
+					setData(data)
+				}
+			}
+		}
+	)
+
 	const onSubmit: SubmitHandler<IAuthField> = (data) => {
-		login(data)
+		if (type === 'login') login(data)
+		else registration(data)
 	}
 
 	return (
 		<div className={styles.wrapper} ref={ref}>
-			<button className={stylesIcons.button} onClick={() => setIsShow(!isShow)}>
-				<FaUserCircle fill='#A4A4A4' />
-			</button>
+			{!user && (
+				<button
+					className={stylesIcons.button}
+					onClick={() => setIsShow(!isShow)}
+				>
+					<FaUserCircle fill='#A4A4A4' />
+				</button>
+			)}
 			{isShow && (
 				<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 					{type === 'register' && (

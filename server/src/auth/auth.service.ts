@@ -34,7 +34,6 @@ export class AuthService {
     return {
       user,
       accessToken,
-      refreshToken,
     };
   }
 
@@ -61,8 +60,7 @@ export class AuthService {
     };
     return {
       user,
-      accessToken,
-      refreshToken,
+      accessToken
     };
   }
 

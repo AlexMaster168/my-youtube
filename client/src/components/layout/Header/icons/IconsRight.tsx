@@ -1,9 +1,8 @@
 import React, { FC } from 'react'
 import { BsPlusCircleFill } from 'react-icons/bs'
-
-import styles from './IconRight.module.scss'
 import AuthForm from '@/components/layout/Header/auth-form/AuthForm'
 import { useAuth } from '@/hooks/useAuth'
+import styles from './IconRight.module.scss'
 
 const IconsRight: FC = () => {
 	const { user } = useAuth()

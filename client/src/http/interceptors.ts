@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 export const getContentType = () => ({
 	'Content-Type': 'application/json'
@@ -34,7 +35,7 @@ $api.interceptors.response.use(
 				const response = await axios.get(`${API_URL}/refresh`, {
 					withCredentials: true
 				})
-				localStorage.setItem('token', response.data.accessToken)
+				Cookies.set('accessToken', response.data.accessToken)
 				return $api.request(originalRequest)
 			} catch (e) {
 				console.log('НЕ АВТОРИЗОВАН')

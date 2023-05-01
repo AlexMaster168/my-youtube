@@ -1,12 +1,16 @@
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
 import React, {
 	createContext,
 	Dispatch,
 	FC,
 	PropsWithChildren,
 	SetStateAction,
+	useEffect,
 	useState
 } from 'react'
 import { IAuthData } from '@/services/auth/auth.helper'
+import { AuthService } from '@/services/auth/auth.service'
 
 interface IContext extends IAuthData {
 	setData: Dispatch<SetStateAction<IAuthData>> | null
@@ -14,11 +18,34 @@ interface IContext extends IAuthData {
 
 export const AuthContext = createContext<IContext>({} as IContext)
 
+export const defaultValue = {
+	user: null,
+	accessToken: ''
+}
+
 const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-	const [data, setData] = useState<IAuthData>({
-		user: null,
-		accessToken: ''
-	})
+	const [data, setData] = useState<IAuthData>(defaultValue)
+
+	const { pathname } = useRouter()
+
+	useEffect(() => {
+		const accessToken = Cookies.get('accessToken')
+		if (accessToken) {
+			const user = JSON.parse(localStorage.getItem('user') || '')
+			setData({
+				user,
+				accessToken
+			})
+		}
+	}, [])
+
+	useEffect(() => {
+		const accessToken = Cookies.get('accessToken')
+		if (!accessToken && !data.user) {
+			AuthService.logout()
+			setData(defaultValue)
+		}
+	}, [pathname])
 
 	return (
 		<AuthContext.Provider value={{ ...data, setData }}>

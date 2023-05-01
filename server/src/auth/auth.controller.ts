@@ -18,30 +18,18 @@ export class AuthController {
 	@HttpCode(200)
 	@Post('register')
 	async register(@Body() dto: RegisterDto): Promise<any> {
-		const result = await this.authService.register(dto);
-		return {
-			message: 'Пользователь успешно зарегистрирован',
-			result
-		};
+		return await this.authService.register(dto);
 	}
 
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Post('login')
 	async login(@Body() dto: AuthDto): Promise<any> {
-		const result = await this.authService.login(dto);
-		return {
-			message: 'Успешный вход в систему',
-			result
-		};
+		return await this.authService.login(dto);
 	}
 
 	@Post('refresh')
 	async refreshToken(@Body() dto: RefreshDto): Promise<any> {
-		const result = await this.authService.refreshTokens(dto.refreshToken);
-		return {
-			message: 'Токен обновлен',
-			data: result
-		};
+		return await this.authService.refreshTokens(dto.refreshToken);
 	}
 }
