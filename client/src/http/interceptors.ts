@@ -38,7 +38,7 @@ $api.interceptors.response.use(
 				Cookies.set('accessToken', response.data.accessToken)
 				return $api.request(originalRequest)
 			} catch (e) {
-				console.log('НЕ АВТОРИЗОВАН')
+				alert('НЕ АВТОРИЗОВАН')
 			}
 		}
 		throw error

@@ -29,10 +29,10 @@ export class User {
 	@Column({ unique: true })
 	name: string;
 
-	@Column({ nullable: true })
-	isVerified: string;
+	@Column({ default: false })
+	isVerified: boolean;
 
-	@Column({ nullable: true })
+	@Column({ default: 0, nullable: true })
 	subscribersCount: number;
 
 	@Column({ nullable: true })

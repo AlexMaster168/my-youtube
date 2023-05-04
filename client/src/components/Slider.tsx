@@ -15,8 +15,6 @@ const Slider: FC = () => {
 			spaceBetween={7}
 			slidesPerView={2}
 			navigation={true}
-			onSlideChange={() => console.log('slide change')}
-			onSwiper={(swiper) => console.log(swiper)}
 			autoplay={{
 				delay: 4500
 			}}

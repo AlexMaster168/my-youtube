@@ -53,6 +53,7 @@ const AuthForm: FC = () => {
 	const onSubmit: SubmitHandler<IAuthField> = (data) => {
 		if (type === 'login') login(data)
 		else registration(data)
+		setIsShow(false)
 	}
 
 	return (
