@@ -21,9 +21,9 @@ export class Comment {
 	@Column()
 	message: string;
 
-	// @ManyToOne(() => User, (user) => user.comments)
+	// @ManyToOne(() => User, (user) => user.comments, { nullable: true })
 	// user?: User;
 	//
-	// @ManyToOne(() => Video, (video) => video.comments)
+	// @ManyToOne(() => Video, (video) => video.comments, { nullable: true })
 	// video?: Video;
 }

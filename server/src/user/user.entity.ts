@@ -5,54 +5,54 @@ import {
 	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
-} from 'typeorm';
-import { Video } from '../video/video.entity';
-import { Comment } from '../comment/comment.entity';
+} from 'typeorm'
+import { Video } from '../video/video.entity'
+import { Comment } from '../comment/comment.entity'
 
 @Entity('user')
 export class User {
 	@PrimaryGeneratedColumn()
-	id: number;
+	id: number
 
 	@CreateDateColumn()
-	createdAt: Date;
+	createdAt: Date
 
 	@UpdateDateColumn()
-	updatedAt: Date;
+	updatedAt: Date
 
 	@Column({ unique: true })
-	email: string;
+	email: string
 
 	@Column()
-	password: string;
+	password: string
 
 	@Column({ unique: true })
-	name: string;
+	name: string
 
 	@Column({ default: false })
-	isVerified: boolean;
+	isVerified: boolean
 
-	@Column({ default: 0, nullable: true })
-	subscribersCount: number;
-
-	@Column({ nullable: true })
-	description: string;
+	@Column({ default: 0 })
+	subscribersCount: number
 
 	@Column({ nullable: true })
-	location: string;
+	description: string
 
 	@Column({ nullable: true })
-	bannerPath: string;
+	location: string
 
 	@Column({ nullable: true })
-	avatarPath: string;
+	bannerPath: string
+
+	@Column({ nullable: true })
+	avatarPath: string
 
 	@Column({ default: '' })
-	refreshToken: string;
+	refreshToken: string
 
-	// @OneToMany(() => Video, (video) => video.users)
+	// @OneToMany(() => Video, (video) => video.users, { nullable: true })
 	// videos?: Video[];
 	//
-	// @OneToMany(() => Comment, (comment) => comment.user)
+	// @OneToMany(() => Comment, (comment) => comment.user, { nullable: true })
 	// comments?: Comment[];
 }

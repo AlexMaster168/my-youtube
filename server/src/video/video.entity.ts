@@ -43,9 +43,9 @@ export class Video {
 	@Column()
 	thumbnailPath: string;
 
-	// @ManyToOne(() => User, (user) => user.videos)
+	// @ManyToOne(() => User, (user) => user.videos, { nullable: true })
 	// users: User;
 	//
-	// @OneToMany(() => Comment, (comment) => comment.video)
+	// @OneToMany(() => Comment, (comment) => comment.video, { nullable: true })
 	// comments?: Comment[];
 }

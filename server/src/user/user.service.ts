@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { User } from './user.entity'
-import { Repository } from 'typeorm'
+import { MoreThan, Repository } from 'typeorm'
 import { UserDto } from './dto/user.dto'
 import { genSalt, hash } from 'bcryptjs'
 
@@ -11,7 +11,10 @@ export class UserService {
 	}
 
 	async getById(id: number): Promise<User> {
-		const user = await this.userRepo.findOne({ where: { id } })
+		const user = await this.userRepo.findOne({
+			where: { id },
+			select: ['id', 'email', 'subscribersCount', 'bannerPath', 'avatarPath', 'location', 'description', 'name', 'isVerified']
+		})
 		if (!user)
 			throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND)
 		return user
@@ -37,5 +40,15 @@ export class UserService {
 		return
 	}
 
-
+	async getMostPopular() {
+		return this.userRepo.find({
+			where: {
+				subscribersCount: MoreThan(0)
+			},
+			order: {
+				subscribersCount: 'DESC'
+			},
+			select: ['id', 'email', 'subscribersCount', 'bannerPath', 'avatarPath', 'location', 'description', 'name', 'isVerified']
+		})
+	}
 }
