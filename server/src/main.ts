@@ -4,11 +4,11 @@ import { NestFactory } from "@nestjs/core";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const config = await app.get(ConfigService);
   app.enableCors({
-    origin: "http://localhost:3000",
+    origin: config.get<string>("CLIENT_URL"),
     credentials: true,
   });
-  const config = await app.get(ConfigService);
   const port = config.get<number>("API_PORT");
   await app.listen(port || 5000, () => {
     console.log(`App started on port: ${port}`);

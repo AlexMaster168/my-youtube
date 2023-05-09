@@ -1,3 +1,6 @@
+import { Comment } from "./comment/comment.entity";
+import { User } from "./user/user.entity";
+import { Video } from "./video/video.entity";
 import { ConfigService } from "@nestjs/config";
 import { JwtModuleOptions } from "@nestjs/jwt";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
@@ -12,9 +15,11 @@ export const getTypeOrmConfig = async (
   database: config.get<string>("TYPEORM_DATABASE"),
   port: config.get<number>("TYPEORM_PORT"),
   entities: [__dirname + "dist/**/*.entity{.ts,.js}"],
+  migrations: [__dirname + "dist/migrations/*{.ts,.js}"],
   synchronize: true,
   autoLoadEntities: true,
   logging: true,
+  migrationsRun: true,
 });
 
 export const getJWTConfig = async (

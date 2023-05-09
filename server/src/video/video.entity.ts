@@ -1,51 +1,52 @@
 import {
 	Column,
-	CreateDateColumn,
+	CreateDateColumn, Entity,
 	ManyToOne,
 	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
-} from 'typeorm';
-import { User } from '../user/user.entity';
-import { Comment } from '../comment/comment.entity';
+} from 'typeorm'
+import { User as UserEntity } from '../user/user.entity'
+import { Comment as CommentEntity } from '../comment/comment.entity'
 
+@Entity('video')
 export class Video {
 	@PrimaryGeneratedColumn()
-	id: number;
+	id: number
 
 	@CreateDateColumn()
-	createdAt: Date;
+	createdAt: Date
 
 	@UpdateDateColumn()
-	updatedAt: Date;
+	updatedAt: Date
 
 	@Column()
-	name: string;
+	name: string
 
-	@Column()
-	isPublic: boolean;
+	@Column({ default: false })
+	isPublic: boolean
 
 	@Column({ default: 0 })
-	views?: number;
+	views?: number
 
 	@Column({ default: 0 })
-	like?: number;
+	likes?: number
 
 	@Column({ default: 0 })
-	dislike?: number;
+	dislikes?: number
 
 	@Column()
-	description: string;
+	description: string
 
 	@Column()
-	videoPath: string;
+	videoPath: string
 
 	@Column()
-	thumbnailPath: string;
+	thumbnailPath: string
 
-	// @ManyToOne(() => User, (user) => user.videos, { nullable: true })
-	// users: User;
-	//
-	// @OneToMany(() => Comment, (comment) => comment.video, { nullable: true })
-	// comments?: Comment[];
+	@ManyToOne(() => UserEntity, user => user.video)
+	user: UserEntity;
+
+	@OneToMany(() => CommentEntity, comment => comment.video)
+	comment?: CommentEntity[]
 }

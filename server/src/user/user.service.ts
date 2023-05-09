@@ -16,7 +16,7 @@ export class UserService {
 			select: ['id', 'email', 'subscribersCount', 'bannerPath', 'avatarPath', 'location', 'description', 'name', 'isVerified']
 		})
 		if (!user)
-			throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND)
+			throw new HttpException('User not found', HttpStatus.NOT_FOUND)
 		return user
 	}
 

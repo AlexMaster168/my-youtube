@@ -1,13 +1,14 @@
 import {
 	Column,
-	CreateDateColumn,
+	CreateDateColumn, Entity,
 	ManyToOne,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
-} from 'typeorm';
-import { User } from '../user/user.entity';
-import { Video } from '../video/video.entity';
+} from 'typeorm'
+import { User as UserEntity } from '../user/user.entity';
+import { Video as VideoEntity } from '../video/video.entity';
 
+@Entity('comment')
 export class Comment {
 	@PrimaryGeneratedColumn()
 	id: number;
@@ -21,9 +22,9 @@ export class Comment {
 	@Column()
 	message: string;
 
-	// @ManyToOne(() => User, (user) => user.comments, { nullable: true })
-	// user?: User;
-	//
-	// @ManyToOne(() => Video, (video) => video.comments, { nullable: true })
-	// video?: Video;
+	@ManyToOne(() => UserEntity, user => user.comment)
+	user: UserEntity;
+
+	@ManyToOne(() => VideoEntity)
+	video: VideoEntity;
 }

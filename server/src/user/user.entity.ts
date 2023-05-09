@@ -6,8 +6,8 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm'
-import { Video } from '../video/video.entity'
-import { Comment } from '../comment/comment.entity'
+import { Video as VideoEntity } from '../video/video.entity'
+import { Comment as CommentEntity } from '../comment/comment.entity'
 
 @Entity('user')
 export class User {
@@ -50,9 +50,9 @@ export class User {
 	@Column({ default: '' })
 	refreshToken: string
 
-	// @OneToMany(() => Video, (video) => video.users, { nullable: true })
-	// videos?: Video[];
-	//
-	// @OneToMany(() => Comment, (comment) => comment.user, { nullable: true })
-	// comments?: Comment[];
+	@OneToMany(() => VideoEntity, video => video.user)
+	video: VideoEntity[];
+
+	@OneToMany(() => CommentEntity, comment => comment.user)
+	comment?: CommentEntity[];
 }

@@ -44,14 +44,14 @@ export class AuthService {
 			where: { email: dto.email }
 		})
 		if (!existingUser) {
-			throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND)
+			throw new HttpException('User not found', HttpStatus.NOT_FOUND)
 		}
 		const isPasswordMatching = await bcrypt.compare(
 			dto.password,
 			existingUser.password
 		)
 		if (!isPasswordMatching) {
-			throw new HttpException('Неверный пароль', HttpStatus.UNAUTHORIZED)
+			throw new HttpException('Wrong password', HttpStatus.UNAUTHORIZED)
 		}
 		const accessToken = this.generateAccessToken(existingUser.id)
 		const refreshToken = this.generateRefreshToken(existingUser.id)
@@ -76,7 +76,7 @@ export class AuthService {
 				}
 			})
 			if (!user)
-				throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND)
+				throw new HttpException('User not found', HttpStatus.NOT_FOUND)
 			const accessToken = this.generateAccessToken(user.id)
 			const newRefreshToken = this.generateRefreshToken(user.id)
 			await this.userRepo.update(
@@ -90,12 +90,12 @@ export class AuthService {
 		} catch (err) {
 			if (err.name === 'TokenExpiredError') {
 				throw new HttpException(
-					'Срок действия токена истек',
+					'"The token has expired',
 					HttpStatus.UNAUTHORIZED
 				)
 			}
 			throw new HttpException(
-				'Недействительный токен',
+				'Invalid token',
 				HttpStatus.UNAUTHORIZED
 			)
 		}
@@ -106,8 +106,8 @@ export class AuthService {
 		if (existingRecord) {
 			const errorMessage =
 				field === 'email'
-					? 'Пользователь с таким адресом электронной почты уже зарегистрирован'
-					: 'Пользователь с таким именем уже зарегистрирован'
+					? ' User with this email address is already registered'
+					: ' User with this name is already registered'
 			throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST)
 		}
 	}
