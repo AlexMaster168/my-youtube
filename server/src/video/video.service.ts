@@ -4,6 +4,7 @@ import { FindOptionsWhere, ILike, MoreThan, Repository } from 'typeorm'
 import { Video } from './video.entity'
 import { VideoDto } from './dto/video.dto'
 
+export type likesType = 'inc' | 'dis';
 @Injectable()
 export class VideoService {
 	constructor(@InjectRepository(Video)
@@ -20,7 +21,7 @@ export class VideoService {
 		return video
 	}
 
-	async getMostPopularByView() {
+	async getMostPopularByViews() {
 		return this.videoRepo.find({
 			where: {
 				views: MoreThan(0)
@@ -31,12 +32,13 @@ export class VideoService {
 		})
 	}
 
-	async getAll(searchTerm?: string) {
+	async getAll(searchTerm?: string, category?: any) {
 		const whereOptions: FindOptionsWhere<Video> = { isPublic: true }
 
 		if (searchTerm) whereOptions.name = ILike(`%${searchTerm}%`)
+		if (category) whereOptions.category = category
 
-		return this.videoRepo.find({
+		return await this.videoRepo.find({
 			where: whereOptions,
 			order: {
 				createdAt: 'DESC'
@@ -57,55 +59,46 @@ export class VideoService {
 		})
 	}
 
-	async createVideo(dto: VideoDto) {
+	async create(dto: VideoDto) {
 		const video = await this.videoRepo.create(dto)
 		return video.id
 	}
 
-	async updateVideo(id: number, dto: VideoDto) {
-		const findVideo= await this.videoRepo.findOne({
-			where: {id}
+	async update(id: number, dto: VideoDto) {
+		const findVideo = await this.videoRepo.findOne({
+			where: { id }
 		})
-		if (!findVideo) throw new Error('Video not found');
-		return await this.videoRepo.update({ id }, dto);
+		if (!findVideo) throw new Error('Video not found')
+		return await this.videoRepo.update({ id }, dto)
 	}
 
-	async deleteVideo(id: number) {
-		const findVideo = await this.videoRepo.findOne({ where: { id } });
+	async delete(id: number) {
+		const findVideo = await this.videoRepo.findOne({ where: { id } })
 
-		if (!findVideo) throw new Error('Video not found');
-		return await this.videoRepo.remove(findVideo);
+		if (!findVideo) throw new Error('Video not found')
+		return await this.videoRepo.remove(findVideo)
 	}
 
 	async updateCountView(id: number) {
-		const findVideo= await this.videoRepo.findOne({
-			where: {id}
+		const findVideo = await this.videoRepo.findOne({
+			where: { id }
 		})
-		if (!findVideo) throw new Error('Video not found');
-		const updatedViews = findVideo.views + 1;
+		if (!findVideo) throw new Error('Video not found')
+		const updatedViews = findVideo.views + 1
 		return await this.videoRepo.update({ id }, {
 			views: updatedViews
-		});
+		})
 	}
 
-	async updateReaction(id: number, reactionType: 'like' | 'dislike', type: 'inc' | 'dic') {
-		const video = await this.videoRepo.findOne({
+	async updateReaction(id: number, type: likesType) {
+		const findVideo = await this.videoRepo.findOne({
 			where: { id }
-		});
+		})
 
-		if (!video) throw new Error('Video not found');
-
-		let updatedVideo;
-
-		if (type === 'inc') {
-			video[reactionType + 's'] += 1;
-			updatedVideo = await this.videoRepo.save(video);
-		} else if (type === 'dic') {
-			if (video[reactionType + 's'] > 0) {
-				video[reactionType + 's'] -= 1;
-			}
-			updatedVideo = await this.videoRepo.save(video);
-		}
-		return updatedVideo
+		if (!findVideo) throw new Error('Video not found')
+		let updatedLikes = type === 'inc' ? findVideo.likes + 1 : findVideo.likes - 1
+		return await this.videoRepo.update({ id }, {
+			likes: updatedLikes
+		})
 	}
 }

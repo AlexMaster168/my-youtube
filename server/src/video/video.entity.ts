@@ -8,6 +8,7 @@ import {
 } from 'typeorm'
 import { User as UserEntity } from '../user/user.entity'
 import { Comment as CommentEntity } from '../comment/comment.entity'
+import { Category as CategoryEntity } from '../category/category.entity'
 
 @Entity('video')
 export class Video {
@@ -32,9 +33,6 @@ export class Video {
 	@Column({ default: 0 })
 	likes?: number
 
-	@Column({ default: 0 })
-	dislikes?: number
-
 	@Column()
 	description: string
 
@@ -49,4 +47,7 @@ export class Video {
 
 	@OneToMany(() => CommentEntity, comment => comment.video)
 	comment?: CommentEntity[]
+
+	@ManyToOne(() => CategoryEntity, category => category.video)
+	category: CategoryEntity;
 }

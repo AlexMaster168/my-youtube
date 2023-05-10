@@ -9,6 +9,11 @@ import {
 import { Video as VideoEntity } from '../video/video.entity'
 import { Comment as CommentEntity } from '../comment/comment.entity'
 
+export enum UserRole {
+	User = 'user',
+	Admin = 'admin'
+}
+
 @Entity('user')
 export class User {
 	@PrimaryGeneratedColumn()
@@ -49,6 +54,9 @@ export class User {
 
 	@Column({ default: '' })
 	refreshToken: string
+
+	@Column({ type: 'enum', enum: UserRole, default: UserRole.User })
+	role: UserRole
 
 	@OneToMany(() => VideoEntity, video => video.user)
 	video: VideoEntity[];

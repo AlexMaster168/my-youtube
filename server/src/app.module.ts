@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { UserModule } from './user/user.module'
 import { getTypeOrmConfig } from './config'
+import { CategoryModule } from './category/category.module'
 
 @Module({
 	imports: [
@@ -17,6 +18,7 @@ import { getTypeOrmConfig } from './config'
 		}),
 		UserModule,
 		VideoModule,
+		CategoryModule,
 		CommentModule,
 		AuthModule
 	]

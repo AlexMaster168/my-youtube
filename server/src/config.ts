@@ -1,6 +1,3 @@
-import { Comment } from "./comment/comment.entity";
-import { User } from "./user/user.entity";
-import { Video } from "./video/video.entity";
 import { ConfigService } from "@nestjs/config";
 import { JwtModuleOptions } from "@nestjs/jwt";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
