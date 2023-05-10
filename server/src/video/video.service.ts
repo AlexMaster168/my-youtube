@@ -1,22 +1,22 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { FindOptionsWhere, ILike, MoreThan, Repository } from 'typeorm'
 import { Video } from './video.entity'
 import { VideoDto } from './dto/video.dto'
 
 export type likesType = 'inc' | 'dis';
+
 @Injectable()
 export class VideoService {
 	constructor(@InjectRepository(Video)
 							private readonly videoRepo: Repository<Video>) {
 	}
 
-	async getById(id: number): Promise<Video> {
+	async getById(id: number, isPublic: boolean = true): Promise<Video> {
 		const video = await this.videoRepo.findOne({
-			where: { id, isPublic: true }
+			where: isPublic ? { id, isPublic: true } : { id }
 		})
-		if (!video)
-			throw new HttpException('Video not found', HttpStatus.NOT_FOUND)
+		if (!video) throw new HttpException('Video not found', HttpStatus.NOT_FOUND)
 
 		return video
 	}
@@ -46,7 +46,7 @@ export class VideoService {
 		})
 	}
 
-	async getByUserId(userId: string, isPrivate: boolean = false) {
+	async getByUserId(userId: number, isPrivate: boolean = false) {
 		const whereOptions: FindOptionsWhere<Video> = { user: userId as any }
 
 		if (!isPrivate) whereOptions.isPublic = true
@@ -90,7 +90,9 @@ export class VideoService {
 		})
 	}
 
-	async updateReaction(id: number, type: likesType) {
+	async updateReaction(id: number, type?: likesType) {
+		if (!type) throw new BadRequestException('type query is invalid')
+
 		const findVideo = await this.videoRepo.findOne({
 			where: { id }
 		})

@@ -16,26 +16,31 @@ import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../user/decorators/user.decorator'
 import { VideoDto } from './dto/video.dto'
 import { User } from '../user/user.entity'
-import { AccessToVideo } from '../user/decorators/AccessToVideo.decorator'
+import { AccessToVideo } from '../user/decorators/accessToVideo.decorator'
 
 @Controller('video')
 export class VideoController {
 	constructor(private readonly videoService: VideoService) {
 	}
 
-	@Get(':id')
+	@Get('private/:id')
 	@Auth()
-	async getVideo(@Param('id') id: number) {
-		return this.videoService.getById(id)
+	async getVideoPrivate(@AccessToVideo('id') id: number) {
+		return this.videoService.getById(id, false)
 	}
 
 	@Get('by-user/:userId')
-	@Auth()
 	async getVideoByUserId(@Param('userId') userId: any) {
 		return this.videoService.getByUserId(userId)
 	}
 
-	@Get('')
+	@Get('by-user-private')
+	@Auth()
+	async getVideoByUserIdPrivate(@AccessToVideo('id') id: number) {
+		return this.videoService.getByUserId(id, true)
+	}
+
+	@Get()
 	async getAll(@Query('searchTerm') searchTerm?: string, @Query('category') category?: string) {
 		return this.videoService.getAll(searchTerm, category)
 	}
@@ -43,6 +48,11 @@ export class VideoController {
 	@Get('popular')
 	async getMostPopular(@CurrentUser('id') id: number) {
 		return this.videoService.getMostPopularByViews()
+	}
+
+	@Get(':id')
+	async getVideo(@Param('id') id: number) {
+		return this.videoService.getById(id)
 	}
 
 	@UsePipes(new ValidationPipe())

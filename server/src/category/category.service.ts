@@ -13,12 +13,12 @@ export class CategoryService {
 		return await this.categoryRepo.find({ order: { createdAt: 'DESC' } })
 	}
 
-	async createCategory(name: string) {
+	async create(name: string) {
 		const category = this.categoryRepo.create({ name })
 		return category.id
 	}
 
-	async deleteCategory(id: number) {
+	async delete(id: number) {
 		const findCategory = await this.categoryRepo.findOne({ where: { id } })
 
 		if (!findCategory) throw new Error('Category not found')

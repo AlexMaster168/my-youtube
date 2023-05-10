@@ -6,5 +6,5 @@ TODO:
  x Video add, edit, remove, list by userID[for all] [user private]
  x Get all videos(with categories), most popular by view, get by id with comment & channel info
  x Update Likes, views
- - Comments [add], byVideoId
- - Video upload
+ x Comments [add], get byVideoId
+ x Video upload

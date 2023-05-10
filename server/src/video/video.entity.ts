@@ -43,11 +43,11 @@ export class Video {
 	thumbnailPath: string
 
 	@ManyToOne(() => UserEntity, user => user.video)
-	user: UserEntity;
+	user: UserEntity
 
 	@OneToMany(() => CommentEntity, comment => comment.video)
 	comment?: CommentEntity[]
 
 	@ManyToOne(() => CategoryEntity, category => category.video)
-	category: CategoryEntity;
+	category: CategoryEntity
 }

@@ -1,5 +1,8 @@
 import { Controller, Delete, Get, HttpCode, Post } from '@nestjs/common'
 import { CategoryService } from './category.service'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { Roles } from '../user/decorators/roles.decorator'
+import { UserRole } from '../user/user.entity'
 
 @Controller('category')
 export class CategoryController {
@@ -8,8 +11,10 @@ export class CategoryController {
 
 	@HttpCode(200)
 	@Post()
-	async create(name: string) {
-		return await this.categoryService.createCategory(name)
+  @Auth()
+	@Roles(UserRole.Admin)
+	async createCategory(name: string) {
+		return await this.categoryService.create(name)
 	}
 
 	@HttpCode(200)
@@ -20,7 +25,9 @@ export class CategoryController {
 
 	@HttpCode(200)
 	@Delete()
-	async delete(id: number) {
-    return await this.categoryService.deleteCategory(id)
+	@Auth()
+	@Roles(UserRole.Admin)
+	async deleteCategory(id: number) {
+    return await this.categoryService.delete(id)
 	}
 }

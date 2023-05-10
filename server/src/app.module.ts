@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { UserModule } from './user/user.module'
 import { getTypeOrmConfig } from './config'
 import { CategoryModule } from './category/category.module'
+import { MediaModule } from './media/media.module';
 
 @Module({
 	imports: [
@@ -20,7 +21,8 @@ import { CategoryModule } from './category/category.module'
 		VideoModule,
 		CategoryModule,
 		CommentModule,
-		AuthModule
+		AuthModule,
+		MediaModule
 	]
 })
 export class AppModule {
