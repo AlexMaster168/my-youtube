@@ -1,9 +1,9 @@
 import {
-	IAuthData,
 	removeTokenFromStorage,
 	saveToStorage
 } from '@/services/auth/auth.helper'
 import $api from '@/http/interceptors'
+import { IAuthData } from '@/services/types/auth.interface'
 
 export const AuthService = {
 	async login(email: string, password: string) {

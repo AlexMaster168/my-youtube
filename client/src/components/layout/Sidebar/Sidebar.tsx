@@ -14,8 +14,9 @@ import SmartPhone from '@/images/common/smartphone.svg'
 import Support from '@/images/common/support.svg'
 import Time from '@/images/common/time.svg'
 import VideoCamera from '@/images/common/video-camera.svg'
-import Avatar from '@/images/main/avatar.jpg'
 import { useAuth } from '@/hooks/useAuth'
+import Line from '@/components/ui/Line'
+import ProfileInfo from '@/components/layout/Sidebar/ProfileInfo'
 
 const Sidebar: () => JSX.Element | string = () => {
 	const { user, setData } = useAuth()
@@ -30,22 +31,8 @@ const Sidebar: () => JSX.Element | string = () => {
 			<Link href='/' className='logo'>
 				<Image src={Logo} alt='Youtube' width={130} height={42} />
 			</Link>
-			<div className='profile_info'>
-				<Image src={Avatar} alt='Avatar' width={70} height={70} />
-				<div className='name'>Nannie Nelson</div>
-				<div className='location'>Montreal, QC</div>
-			</div>
-			<div className='information'>
-				<div className='item'>
-					<div className='top'>278</div>
-					<div className='bottom'>videos</div>
-				</div>
-				<div className='item'>
-					<div className='top'>36.5k</div>
-					<div className='bottom'>subscribers</div>
-				</div>
-			</div>
-			<div className='line'></div>
+      <ProfileInfo/>
+			<Line/>
 			<ul className='mnu_sidebar'>
 				<li>
 					<Link href='#'>

@@ -12,7 +12,7 @@ export class VideoService {
 							private readonly videoRepo: Repository<Video>) {
 	}
 
-	async getById(id: number, isPublic: boolean = true): Promise<Video> {
+	async getById(id: number, isPublic = true): Promise<Video> {
 		const video = await this.videoRepo.findOne({
 			where: isPublic ? { id, isPublic: true } : { id }
 		})
@@ -46,7 +46,7 @@ export class VideoService {
 		})
 	}
 
-	async getByUserId(userId: number, isPrivate: boolean = false) {
+	async getByUserId(userId: number, isPrivate = false) {
 		const whereOptions: FindOptionsWhere<Video> = { user: userId as any }
 
 		if (!isPrivate) whereOptions.isPublic = true
@@ -98,7 +98,7 @@ export class VideoService {
 		})
 
 		if (!findVideo) throw new Error('Video not found')
-		let updatedLikes = type === 'inc' ? findVideo.likes + 1 : findVideo.likes - 1
+		const updatedLikes = type === 'inc' ? findVideo.likes + 1 : findVideo.likes - 1
 		return await this.videoRepo.update({ id }, {
 			likes: updatedLikes
 		})

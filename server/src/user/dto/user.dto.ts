@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsUUID, MinLength } from 'class-validator'
+import { IsEmail, IsString, MinLength } from 'class-validator'
 
 export class UserDto {
 	@IsEmail()
@@ -23,12 +23,6 @@ export class UserDto {
 	})
 	@IsString()
 	location: string;
-
-	@MinLength(9, {
-		message: 'BannerPath cannot be less than 9 characters!'
-	})
-	@IsString()
-	bannerPath: string;
 
 	@MinLength(9, {
 		message: 'AvatarPath cannot be less than 9 characters!'

@@ -1,12 +1,7 @@
 import Cookies from 'js-cookie'
+import { IAuthData } from '@/services/types/auth.interface'
 
-export interface IAuthData {
-	user: {
-		id: string
-		email: string
-	} | null
-	accessToken: string
-}
+
 export const saveTokenToStorage = (accessToken: string) => {
 	Cookies.set('accessToken', accessToken)
 }

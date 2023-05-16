@@ -28,5 +28,5 @@ export class VideoDto {
 	thumbnailPath: string
 
 	@IsUUID()
-	userId?: string
+	userId?: number
 }

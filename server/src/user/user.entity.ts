@@ -47,9 +47,6 @@ export class User {
 	location: string
 
 	@Column({ nullable: true })
-	bannerPath: string
-
-	@Column({ nullable: true })
 	avatarPath: string
 
 	@Column({ default: '' })

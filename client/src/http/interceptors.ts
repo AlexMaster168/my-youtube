@@ -13,8 +13,13 @@ export const $api = axios.create({
 	headers: getContentType()
 })
 
+export const api = axios.create({
+	baseURL: API_URL,
+	headers: getContentType()
+})
+
 $api.interceptors.request.use((config) => {
-	config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+	config.headers.Authorization = `Bearer ${Cookies.get('accessToken')}`
 	return config
 })
 

@@ -9,8 +9,8 @@ import React, {
 	useEffect,
 	useState
 } from 'react'
-import { IAuthData } from '@/services/auth/auth.helper'
 import { AuthService } from '@/services/auth/auth.service'
+import { IAuthData } from '@/services/types/auth.interface'
 
 interface IContext extends IAuthData {
 	setData: Dispatch<SetStateAction<IAuthData>> | null

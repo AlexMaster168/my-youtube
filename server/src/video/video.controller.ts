@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common'
 import { likesType, VideoService } from './video.service'
 import { Auth } from '../auth/decorators/auth.decorator'
-import { CurrentUser } from '../user/decorators/user.decorator'
 import { VideoDto } from './dto/video.dto'
 import { User } from '../user/user.entity'
 import { AccessToVideo } from '../user/decorators/accessToVideo.decorator'
@@ -46,7 +45,7 @@ export class VideoController {
 	}
 
 	@Get('popular')
-	async getMostPopular(@CurrentUser('id') id: number) {
+	async getMostPopular() {
 		return this.videoService.getMostPopularByViews()
 	}
 
@@ -59,7 +58,7 @@ export class VideoController {
 	@HttpCode(200)
 	@Post()
 	@Auth()
-	async createVideo(dto: VideoDto): Promise<any> {
+	async createVideo(dto: VideoDto) {
 		return await this.videoService.create(dto)
 	}
 
@@ -71,7 +70,7 @@ export class VideoController {
 		@Param('id') id: number,
 		@Body() dto: VideoDto,
 		@AccessToVideo() user: User
-	): Promise<any> {
+	) {
 		return await this.videoService.update(id, dto)
 	}
 
@@ -81,14 +80,14 @@ export class VideoController {
 	async deleteVideo(
 		@Param('id') id: number,
 		@AccessToVideo() user: User
-	): Promise<any> {
+	) {
 		return await this.videoService.delete(id)
 	}
 
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Put('views/:videoId')
-	async updateViews(@Param('videoId') videoId: number): Promise<any> {
+	async updateViews(@Param('videoId') videoId: number) {
 		return await this.videoService.updateCountView(videoId)
 	}
 
@@ -96,7 +95,7 @@ export class VideoController {
 	@HttpCode(200)
 	@Put('likes/:videoId')
 	@Auth()
-	async updateLikes(@Param('videoId') videoId: number, @Query('type') type: likesType): Promise<any> {
+	async updateLikes(@Param('videoId') videoId: number, @Query('type') type: likesType) {
 		return await this.videoService.updateReaction(videoId, type)
 	}
 }
