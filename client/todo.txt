@@ -1,5 +1,5 @@
 TODO:
- - User info in sidebar
+ x User get and update info in sidebar
  - Sidebar items
  - Weekly Featured
  - Random Video

@@ -1,9 +1,8 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { User } from './user.entity'
 import { MoreThan, Repository } from 'typeorm'
 import { UserDto } from './dto/user.dto'
-import { genSalt, hash } from 'bcryptjs'
 
 @Injectable()
 export class UserService {
@@ -23,28 +22,22 @@ export class UserService {
 	async getUser(id: number) {
 		const queryBuilder = this.userRepo.createQueryBuilder('user')
 			.leftJoinAndSelect('user.video', 'video')
-			.select(['user', 'COUNT(video) as videosCount'])
+			.select(['user.id', 'user.email', 'user.name',
+				'user.description', 'user.location',
+				'user.avatarPath', 'user.subscribersCount',
+				'COUNT(video) as videosCount'])
 			.where('user.id = :id', { id })
 			.groupBy('user.id');
 
-		return await queryBuilder.getRawOne();
+		return await queryBuilder.getRawOne()
 	}
 
 	async updateProfile(id: number, dto: UserDto) {
 		const user = await this.getById(id)
-
-		const isSameEmail = await this.userRepo.findOne({ where: { email: dto.email } })
-		if (isSameEmail && id !== Number(isSameEmail.id)) throw new NotFoundException('Email is busy')
-
-		if (dto.password) {
-			const salt = await genSalt(10)
-			user.password = await hash(dto.password, salt)
-		}
-		user.email = dto.email
-		user.name = dto.name
-		user.description = dto.description
-		user.location = dto.location
-		user.avatarPath = dto.avatarPath
+		user.name = dto.name;
+		user.description = dto.description;
+		user.location = dto.location;
+		user.avatarPath = dto.avatarPath;
 		await this.userRepo.save(user)
 		return
 	}

@@ -45,7 +45,7 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 			AuthService.logout()
 			setData(defaultValue)
 		}
-	}, [pathname])
+	}, [data.user, pathname])
 
 	return (
 		<AuthContext.Provider value={{ ...data, setData }}>

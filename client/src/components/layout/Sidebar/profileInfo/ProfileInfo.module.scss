@@ -1,0 +1,47 @@
+.description {
+    margin-bottom: 16px;
+}
+
+.input,
+.textarea {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.button {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+.buttonCancel {
+    background-color: #ff0000;
+}
+
+.buttonCancel:hover {
+    background-color: #d32f2f;
+}
+
+.marginTop {
+    margin-top: 8px;
+}

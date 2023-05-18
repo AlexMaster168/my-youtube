@@ -7,16 +7,22 @@ export const getContentType = () => ({
 
 export const API_URL = `${process.env.SERVER_PORT}`
 
+export const api = axios.create({
+	baseURL: API_URL,
+	headers: getContentType()
+})
+
+api.interceptors.request.use((config) => {
+	config.headers.Authorization = `Bearer ${Cookies.get('accessToken')}`
+	return config
+})
+
 export const $api = axios.create({
 	baseURL: API_URL,
 	withCredentials: true,
 	headers: getContentType()
 })
 
-export const api = axios.create({
-	baseURL: API_URL,
-	headers: getContentType()
-})
 
 $api.interceptors.request.use((config) => {
 	config.headers.Authorization = `Bearer ${Cookies.get('accessToken')}`

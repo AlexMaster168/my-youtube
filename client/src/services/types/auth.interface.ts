@@ -1,6 +1,6 @@
 export interface IAuthData {
 	user: {
-		id: string
+		id: number
 		email: string
 	} | null
 	accessToken: string
