@@ -12,7 +12,7 @@ class UserService {
 	}
 
 	async updateProfile(userId: number | undefined, body: IUser) {
-		return await api.patch<IUser[]>(`/user/profile?id=${userId}`, body);
+		return await api.patch<IUser>(`/user/profile?id=${userId}`, body);
 	}
 }
 

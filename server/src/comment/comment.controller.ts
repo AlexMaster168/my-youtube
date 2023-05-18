@@ -18,7 +18,7 @@ export class CommentController {
 	@HttpCode(200)
 	@Post()
 	@Auth()
-	async createComment(@CurrentUser('id') id: number, dto: CommentDto): Promise<any> {
-		return await this.commentService.create(id, dto)
+	async createComment(dto: CommentDto) {
+		return await this.commentService.create(dto)
 	}
 }

@@ -19,7 +19,7 @@ export class CommentService {
 		})
 	}
 
-	async create(userId: any, dto: CommentDto) {
-		return this.commentRepo.create({ ...dto, user: userId })
+	async create(dto: CommentDto) {
+		return this.commentRepo.create({ message: dto.message })
 	}
 }

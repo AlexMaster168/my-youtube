@@ -15,7 +15,7 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
 		<div className={styles['modal-overlay']}>
 			<div className={styles.modal}>
 				<button className={styles['close-button']} onClick={onClose}>
-					X
+					&#10005;
 				</button>
 				{children}
 			</div>

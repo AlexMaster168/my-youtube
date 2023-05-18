@@ -1,6 +1,6 @@
 TODO:
  x User get and update info in sidebar
- - Sidebar items
+ x Sidebar items
  - Weekly Featured
  - Random Video
  - All Videos
@@ -8,3 +8,4 @@ TODO:
  - Most popular channel video
  - Search
  - Upload new video with popup
+ - verified icon near name

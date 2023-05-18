@@ -4,7 +4,7 @@ import {
 	Delete,
 	Get,
 	HttpCode,
-	Param,
+	Param, Patch,
 	Post,
 	Put,
 	Query,
@@ -64,7 +64,7 @@ export class VideoController {
 
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
-	@Put(':id')
+	@Patch(':id')
 	@Auth()
 	async updateVideo(
 		@Param('id') id: number,
