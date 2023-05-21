@@ -49,7 +49,7 @@ $api.interceptors.response.use(
 				Cookies.set('accessToken', response.data.accessToken)
 				return $api.request(originalRequest)
 			} catch (e) {
-				alert('НЕ АВТОРИЗОВАН')
+				console.log('НЕ АВТОРИЗОВАН')
 			}
 		}
 		throw error

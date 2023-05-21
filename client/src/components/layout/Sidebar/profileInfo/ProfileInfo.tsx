@@ -1,42 +1,55 @@
-import React, { FC, useState, useEffect } from 'react';
-import { useQuery, useMutation } from 'react-query';
-import Loader from '@/components/ui/Loader';
-import { useAuth } from '@/hooks/useAuth';
-import userService from '@/services/user.service';
-import Modal from '@/components/ui/modal/Modal';
-import styles from '@/components/layout/Sidebar/profileInfo/ProfileInfo.module.scss';
-import { IUser } from '@/services/types/user.interface';
-import useInput from '@/hooks/useInput';
+import React, { FC, useState, useEffect } from 'react'
+import { useQuery, useMutation } from 'react-query'
+import Loader from '@/components/ui/Loader'
+import { useAuth } from '@/hooks/useAuth'
+import userService from '@/services/user.service'
+import Modal from '@/components/ui/modal/Modal'
+import styles from '@/components/layout/Sidebar/profileInfo/ProfileInfo.module.scss'
+import { IUser } from '@/services/types/user.interface'
+import useInput from '@/hooks/useInput'
+import Alert from '@/components/ui/alert/alert'
 
 const ProfileInfo: FC = () => {
-	const { user } = useAuth();
+	const { user } = useAuth()
 
-	const { data, isLoading } = useQuery('getProfile', () =>
+	const { data, isLoading, refetch } = useQuery('getProfile', () =>
 			userService.getProfile(user?.id),
 		{
 			select: ({ data }) => data,
 		}
 	);
 
+	const [showAlert, isShowAlert] = useState(false)
+	const closeAlert = () => isShowAlert(false)
+
 	const updateProfileMutation = useMutation((updatedUser: IUser) =>
-		userService.updateProfile(updatedUser.id, updatedUser)
+			userService.updateProfile(updatedUser.id, updatedUser),
+		{
+			onSuccess: () => {
+				isShowAlert(true)
+				setTimeout(() => {
+					isShowAlert(false)
+				}, 3000)
+				refetch();
+			},
+		}
 	);
 
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState(false)
 
-	const newAvatarPath = useInput(data?.user_avatarPath || '');
-	const newName = useInput(data?.user_name || '');
-	const newLocation = useInput(data?.user_location || '');
-	const newDescription = useInput(data?.user_description || '');
+	const newAvatarPath = useInput(data?.user_avatarPath || '')
+	const newName = useInput(data?.user_name || '')
+	const newLocation = useInput(data?.user_location || '')
+	const newDescription = useInput(data?.user_description || '')
 
 	useEffect(() => {
 		if (data) {
-			newAvatarPath.setValue(data.user_avatarPath || '');
-			newName.setValue(data.user_name || '');
-			newLocation.setValue(data.user_location || '');
-			newDescription.setValue(data.user_description || '');
+			newAvatarPath.setValue(data.user_avatarPath || '')
+			newName.setValue(data.user_name || '')
+			newLocation.setValue(data.user_location || '')
+			newDescription.setValue(data.user_description || '')
 		}
-	}, [data]);
+	}, [data])
 
 	const updateProfile = () => {
 		const updatedUser: IUser = {
@@ -44,94 +57,97 @@ const ProfileInfo: FC = () => {
 			avatarPath: newAvatarPath.value,
 			description: newDescription.value,
 			location: newLocation.value,
-			name: newName.value,
-		};
-		updateProfileMutation.mutate(updatedUser);
-		setIsModalOpen(false);
-	};
+			name: newName.value
+		}
+		updateProfileMutation.mutate(updatedUser)
+		setIsModalOpen(false)
+	}
 
 	return isLoading ? (
 		<Loader count={5} />
 	) : (
 		<>
-			<div className="profile_info">
-				{data?.user_avatarPath && (
+			<div className='profile_info'>
+				{showAlert && <Alert title="Вітаю" text="Ви успішно оновили інформацію о профілі" type="primary" onClose={closeAlert} />}
+						{data?.user_avatarPath && (
 					<img src={data.user_avatarPath} alt={data.user_name} width={70} height={70} />
 				)}
-				<div className="name">Name: {data?.user_name}</div>
-				<div className="email">Email: {data?.user_email}</div>
-				<div className="location">Location: {data?.user_location}</div>
+				{/* eslint-disable-next-line react/no-unescaped-entities */}
+				<div className='name'>Ім'я: {data?.user_name}</div>
+				<div className='email'>Email: {data?.user_email}</div>
+				<div className='location'>Локация: {data?.user_location}</div>
 			</div>
 			<br />
-			<div className="description">{data?.user_description}</div>
-			<div className="information">
-				<div className="item">
-					<div className="top">{data?.videosCount || 0}</div>
-					<div className="bottom">videos</div>
+			<div className='description'>{data?.user_description}</div>
+			<div className='information'>
+				<div className='item'>
+					<div className='top'>{data?.videosCount || 0}</div>
+					<div className='bottom'>Видео</div>
 				</div>
-				<div className="item">
-					<div className="top">{data?.user_subscribersCount || 0}</div>
-					<div className="bottom">subscribers</div>
+				<div className='item'>
+					<div className='top'>{data?.user_subscribersCount || 0}</div>
+					<div className='bottom'>Підписчики</div>
 				</div>
 			</div>
 			<button
 				className={`${styles.button} ${styles.marginTop}`}
 				onClick={() => setIsModalOpen(true)}
 			>
-				Update Profile
+				Оновити профіль
 			</button>
 			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-				<label className={styles.label} htmlFor="avatarPath">
-					Avatar Path:
+				<label className={styles.label} htmlFor='avatarPath'>
+					Шлях до картинки:
 				</label>
 				<input
 					className={styles.input}
-					type="text"
-					id="avatarPath"
+					type='text'
+					id='avatarPath'
 					{...newAvatarPath.bind}
-					placeholder="Avatar Path"
+					placeholder='Шлях до картинки'
 				/>
-				<label className={styles.label} htmlFor="name">
-					Name:
+				<label className={styles.label} htmlFor='name'>
+					{/* eslint-disable-next-line react/no-unescaped-entities */}
+					Ім'я:
 				</label>
 				<input
 					className={styles.input}
-					type="text"
-					id="name"
+					type='text'
+					id='name'
 					{...newName.bind}
-					placeholder="Name"
+					placeholder="ім'я"
 				/>
-				<label className={styles.label} htmlFor="location">
-					Location:
+				<label className={styles.label} htmlFor='location'>
+					Локация:
 				</label>
 				<input
 					className={styles.input}
-					type="text"
-					id="location"
+					type='text'
+					id='location'
 					{...newLocation.bind}
-					placeholder="Location"
+					placeholder='Локация'
 				/>
-				<label className={styles.label} htmlFor="description">
-					Description:
+				<label className={styles.label} htmlFor='description'>
+					Опис:
 				</label>
 				<textarea
 					className={styles.textarea}
-					id="description"
+					id='description'
 					{...newDescription.bind}
-					placeholder="Description"
+					placeholder='Опис'
 				></textarea>
 				<button className={styles.button} onClick={updateProfile}>
-					Save
+					Зберегти
 				</button>
 				<button
 					className={`${styles.button} ${styles.buttonCancel}`}
 					onClick={() => setIsModalOpen(false)}
 				>
-					Cancel
+					Відминити
 				</button>
 			</Modal>
 		</>
-	);
-};
+	)
+}
 
-export default ProfileInfo;
+export default ProfileInfo

@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 import { IAuthData } from '@/services/types/auth.interface'
+import { useAuth } from '@/hooks/useAuth'
 
 
 export const saveTokenToStorage = (accessToken: string) => {
@@ -11,7 +12,6 @@ export const removeTokenFromStorage = () => {
 }
 
 export const saveToStorage = (data: IAuthData) => {
-	alert('Пользователь успешно вошёл в систему')
 	saveTokenToStorage(data.accessToken)
 	localStorage.setItem('user', JSON.stringify(data.user))
 }

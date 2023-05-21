@@ -10,6 +10,7 @@ import useOutside from '@/hooks/useOutside'
 import stylesIcons from '../icons/IconRight.module.scss'
 import styles from './AuthForm.module.scss'
 import { IAuthField, validEmail } from './auth-form-interface'
+import Alert from '@/components/ui/alert/alert'
 
 const AuthForm: FC = () => {
 	const { ref, setIsShow, isShow } = useOutside(false)
@@ -18,46 +19,56 @@ const AuthForm: FC = () => {
 	const {
 		register,
 		formState: { errors },
-		handleSubmit
+		handleSubmit,
+		reset
 	} = useForm<IAuthField>({
 		mode: 'onChange'
 	})
 
 	const { user, setData } = useAuth()
 
-	const { mutate: login } = useMutation(
-		'login',
-		(data: IAuthField) => AuthService.login(data.email, data.password),
-		{
-			onSuccess(data) {
-				if (setData) {
-					setData(data)
-				}
-			}
-		}
-	)
+	const [showAlert, setShowAlert] = useState(false);
+	const [alertMessage, setAlertMessage] = useState('');
 
-	const { mutate: registration } = useMutation(
-		'registration',
-		(data: IAuthField) =>
-			AuthService.register(data.email, data.name, data.password),
+	const { mutate: authMutation } = useMutation(
+		type === 'login' ? 'login' : 'registration',
+		(data: IAuthField) => {
+			if (type === 'login') {
+				return AuthService.login(data.email, data.password)
+			} else {
+				return AuthService.register(data.email, data.name, data.password)
+			}
+		},
 		{
 			onSuccess(data) {
 				if (setData) {
 					setData(data)
 				}
-			}
+			},
+			onError() {
+				setShowAlert(true);
+				if (type === 'login') setAlertMessage('Невірні дані для авторизації');
+				else setAlertMessage('Користувач або ім\'я вже існують');
+				setTimeout(() => {
+					setShowAlert(false);
+				}, 3000);
+			},
 		}
 	)
 
 	const onSubmit: SubmitHandler<IAuthField> = (data) => {
-		if (type === 'login') login(data)
-		else registration(data)
+		authMutation(data)
+		reset({
+			name: '',
+			email: '',
+			password: ''
+		});
 		setIsShow(false)
 	}
 
 	return (
 		<div className={styles.wrapper} ref={ref}>
+			{showAlert && <Alert title="Помилка" text={alertMessage} onClose={() => setShowAlert(false)}/>}
 			{!user && (
 				<button
 					className={stylesIcons.button}
@@ -74,10 +85,10 @@ const AuthForm: FC = () => {
 								required: true,
 								minLength: {
 									value: 3,
-									message: 'Min length should more 3 symbols'
+									message: 'Мин длина мусит бути 3 символів'
 								}
 							})}
-							placeholder='Name'
+							placeholder="Ім'я"
 							error={errors.name}
 						/>
 					)}
@@ -86,7 +97,7 @@ const AuthForm: FC = () => {
 							required: true,
 							pattern: {
 								value: validEmail,
-								message: 'Please enter a valid email address'
+								message: 'Введить корректний email'
 							}
 						})}
 						placeholder='Email'
@@ -97,7 +108,7 @@ const AuthForm: FC = () => {
 							required: true,
 							minLength: {
 								value: 6,
-								message: 'Min length should more 6 symbols'
+								message: 'Мин длина мусит бути 6 символів'
 							}
 						})}
 						type='password'
@@ -105,13 +116,13 @@ const AuthForm: FC = () => {
 						error={errors.password}
 					/>
 					<div className={'mt-5 mb-1 text-center'}>
-						<Button onClick={() => setType('login')}>Login</Button>
+						<Button onClick={() => setType('login')}>Авторизуватися</Button>
 					</div>
 					<button
 						className={styles.register}
 						onClick={() => setType('register')}
 					>
-						Register
+						Зарегиструватися
 					</button>
 				</form>
 			)}
