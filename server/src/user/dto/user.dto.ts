@@ -10,6 +10,8 @@ export class UserDto {
 	@IsString()
 	name: string;
 
+	phone?: string;
+
 	@IsString()
 	description: string;
 

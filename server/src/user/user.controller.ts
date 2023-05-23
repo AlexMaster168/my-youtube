@@ -33,6 +33,15 @@ export class UserController {
 		return await this.userService.updateProfile(id, dto)
 	}
 
+	@Patch('forgot')
+	async updatePassword(
+		@Body('email') email: string,
+		@Body('phone') phone: string,
+		@Body('password') password: string,
+	) {
+		return await this.userService.forgotPassword(email, phone, password)
+	}
+
 	@Get('popular')
 	async getMostPopular() {
 		return this.userService.getMostPopular()

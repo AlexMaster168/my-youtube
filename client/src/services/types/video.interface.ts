@@ -10,8 +10,8 @@ export interface IVideo {
 	user?: IUser,
 	isPublic?: boolean
 	thumbnailPath: string,
-	createAt: string,
-	updateAt: string,
+	createdAt: string,
+	updatedAt: string,
 }
 
 export interface IVideoDto extends Pick<IVideo, 'thumbnailPath' | 'name' | 'description' | 'videoPath' | 'isPublic'> {

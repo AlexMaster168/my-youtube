@@ -18,11 +18,12 @@ export const AuthService = {
 			throw new Error()
 		}
 	},
-	async register(email: string, name: string, password: string) {
+	async register(email: string, name: string, phone: string, password: string) {
 		try {
 			const response = await $api.post<IAuthData>('auth/register', {
 				email,
 				name,
+				phone,
 				password
 			})
 			if (response.data.accessToken) saveToStorage(response.data)

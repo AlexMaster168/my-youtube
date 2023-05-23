@@ -8,6 +8,7 @@ import styles from '@/components/layout/Sidebar/profileInfo/ProfileInfo.module.s
 import { IUser } from '@/services/types/user.interface'
 import useInput from '@/hooks/useInput'
 import Alert from '@/components/ui/alert/alert'
+import LocationSelect from '@/components/ui/locationSelect/locationSelect'
 
 const ProfileInfo: FC = () => {
 	const { user } = useAuth()
@@ -26,12 +27,14 @@ const ProfileInfo: FC = () => {
 			userService.updateProfile(updatedUser.id, updatedUser),
 		{
 			onSuccess: () => {
+				refetch();
+			},
+			onError: () => {
 				isShowAlert(true)
 				setTimeout(() => {
 					isShowAlert(false)
 				}, 3000)
-				refetch();
-			},
+			}
 		}
 	);
 
@@ -39,14 +42,14 @@ const ProfileInfo: FC = () => {
 
 	const newAvatarPath = useInput(data?.user_avatarPath || '')
 	const newName = useInput(data?.user_name || '')
-	const newLocation = useInput(data?.user_location || '')
+	const [newLocation, setNewLocation] = useState(data?.user_location || '')
 	const newDescription = useInput(data?.user_description || '')
 
 	useEffect(() => {
 		if (data) {
 			newAvatarPath.setValue(data.user_avatarPath || '')
 			newName.setValue(data.user_name || '')
-			newLocation.setValue(data.user_location || '')
+			setNewLocation(data.user_location || '')
 			newDescription.setValue(data.user_description || '')
 		}
 	}, [data])
@@ -56,7 +59,7 @@ const ProfileInfo: FC = () => {
 			id: user?.id,
 			avatarPath: newAvatarPath.value,
 			description: newDescription.value,
-			location: newLocation.value,
+			location: newLocation,
 			name: newName.value
 		}
 		updateProfileMutation.mutate(updatedUser)
@@ -68,14 +71,14 @@ const ProfileInfo: FC = () => {
 	) : (
 		<>
 			<div className='profile_info'>
-				{showAlert && <Alert title="Вітаю" text="Ви успішно оновили інформацію о профілі" type="primary" onClose={closeAlert} />}
+				{showAlert && <Alert title="Помилка" text="Таке ім'я вже існує" onClose={closeAlert} />}
 						{data?.user_avatarPath && (
 					<img src={data.user_avatarPath} alt={data.user_name} width={70} height={70} />
 				)}
 				{/* eslint-disable-next-line react/no-unescaped-entities */}
 				<div className='name'>Ім'я: {data?.user_name}</div>
 				<div className='email'>Email: {data?.user_email}</div>
-				<div className='location'>Локация: {data?.user_location}</div>
+				<div className='location'>Локація: {data?.user_location}</div>
 			</div>
 			<br />
 			<div className='description'>{data?.user_description}</div>
@@ -115,26 +118,17 @@ const ProfileInfo: FC = () => {
 					type='text'
 					id='name'
 					{...newName.bind}
-					placeholder="ім'я"
+					placeholder="Ім'я"
 				/>
-				<label className={styles.label} htmlFor='location'>
-					Локация:
-				</label>
-				<input
-					className={styles.input}
-					type='text'
-					id='location'
-					{...newLocation.bind}
-					placeholder='Локация'
-				/>
+				<LocationSelect selectedLocation={newLocation} onChange={e => setNewLocation(e.target.value)} />
 				<label className={styles.label} htmlFor='description'>
-					Опис:
+					Опис користувача:
 				</label>
 				<textarea
 					className={styles.textarea}
 					id='description'
 					{...newDescription.bind}
-					placeholder='Опис'
+					placeholder='Опис користувача'
 				></textarea>
 				<button className={styles.button} onClick={updateProfile}>
 					Зберегти

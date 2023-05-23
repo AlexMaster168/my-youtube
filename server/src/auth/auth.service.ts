@@ -23,6 +23,7 @@ export class AuthService {
 		newUser.email = dto.email
 		newUser.name = dto.name
 		newUser.password = await bcrypt.hash(dto.password, 10)
+		newUser.phone = dto.phone
 		newUser.subscribersCount = 0
 		const savedUser = await this.userRepo.save(newUser)
 		const accessToken = this.generateAccessToken(savedUser.id)

@@ -7,10 +7,11 @@ const Button: FC<PropsWithChildren<IButton>> = ({
 	children,
 	className,
 	onClick,
+	color,
 	...rest
 }) => {
 	return (
-		<button className={cn(styles.button, className)} onClick={onClick}>
+		<button className={cn(styles.button, className)} onClick={onClick} style={{backgroundColor: color}}>
 			{children}
 		</button>
 	)

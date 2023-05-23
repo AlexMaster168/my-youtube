@@ -41,6 +41,9 @@
       "@/providers/*": [
         "providers/*"
       ],
+      "@/utils/*": [
+        "utils/*"
+      ],
       "@/services/*": [
         "services/*"
       ]

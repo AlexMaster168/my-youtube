@@ -9,8 +9,9 @@ import { useAuth } from '@/hooks/useAuth'
 import useOutside from '@/hooks/useOutside'
 import stylesIcons from '../icons/IconRight.module.scss'
 import styles from './AuthForm.module.scss'
-import { IAuthField, validEmail } from './auth-form-interface'
+import { IAuthField, validEmail, validPhone } from './auth-form-interface'
 import Alert from '@/components/ui/alert/alert'
+import ForgetPassword from '@/components/layout/Header/forget-password/ForgetPassword'
 
 const AuthForm: FC = () => {
 	const { ref, setIsShow, isShow } = useOutside(false)
@@ -26,9 +27,9 @@ const AuthForm: FC = () => {
 	})
 
 	const { user, setData } = useAuth()
-
-	const [showAlert, setShowAlert] = useState(false);
-	const [alertMessage, setAlertMessage] = useState('');
+  const [isForgotPassword, setIsForgotPassword] = useState(false)
+	const [showAlert, setShowAlert] = useState(false)
+	const [alertMessage, setAlertMessage] = useState('')
 
 	const { mutate: authMutation } = useMutation(
 		type === 'login' ? 'login' : 'registration',
@@ -36,39 +37,39 @@ const AuthForm: FC = () => {
 			if (type === 'login') {
 				return AuthService.login(data.email, data.password)
 			} else {
-				return AuthService.register(data.email, data.name, data.password)
+				return AuthService.register(data.email, data.name, data.phone, data.password)
 			}
 		},
 		{
 			onSuccess(data) {
-				if (setData) {
-					setData(data)
-				}
+				if (setData) setData(data)
 			},
 			onError() {
-				setShowAlert(true);
-				if (type === 'login') setAlertMessage('Невірні дані для авторизації');
-				else setAlertMessage('Користувач або ім\'я вже існують');
+				setShowAlert(true)
+				if (type === 'login') setAlertMessage('Невірні дані для авторизації')
+				else setAlertMessage('Користувач c такими данними вже існує')
 				setTimeout(() => {
-					setShowAlert(false);
-				}, 3000);
-			},
+					setShowAlert(false)
+				}, 3000)
+			}
 		}
 	)
 
 	const onSubmit: SubmitHandler<IAuthField> = (data) => {
 		authMutation(data)
 		reset({
+			phone: '',
 			name: '',
 			email: '',
 			password: ''
-		});
+		})
 		setIsShow(false)
 	}
 
 	return (
 		<div className={styles.wrapper} ref={ref}>
-			{showAlert && <Alert title="Помилка" text={alertMessage} onClose={() => setShowAlert(false)}/>}
+			{isForgotPassword && <ForgetPassword/>}
+			{showAlert && <Alert title='Помилка' text={alertMessage} onClose={() => setShowAlert(false)} />}
 			{!user && (
 				<button
 					className={stylesIcons.button}
@@ -80,17 +81,32 @@ const AuthForm: FC = () => {
 			{isShow && (
 				<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 					{type === 'register' && (
-						<Input
-							{...register('name', {
-								required: true,
-								minLength: {
-									value: 3,
-									message: 'Мин длина мусит бути 3 символів'
-								}
-							})}
-							placeholder="Ім'я"
-							error={errors.name}
-						/>
+						<>
+							<Input
+								{...register('name', {
+									required: true,
+									minLength: {
+										value: 3,
+										message: 'Мін довжина повинна бути 3 символи'
+									}
+								})}
+								placeholder="Ім'я"
+								error={errors.name}
+							/>
+
+							<Input
+								{...register('phone', {
+									required: true,
+									pattern: {
+										value: validPhone,
+										message: 'Введить номер телефону +380'
+									}
+								})}
+								type='tel'
+								placeholder='Номер телефону'
+								error={errors.phone}
+							/>
+						</>
 					)}
 					<Input
 						{...register('email', {
@@ -99,7 +115,8 @@ const AuthForm: FC = () => {
 								value: validEmail,
 								message: 'Введить корректний email'
 							}
-						})}
+						})
+						}
 						placeholder='Email'
 						error={errors.email}
 					/>
@@ -112,17 +129,16 @@ const AuthForm: FC = () => {
 							}
 						})}
 						type='password'
-						placeholder='Password'
+						placeholder='Пароль'
 						error={errors.password}
 					/>
-					<div className={'mt-5 mb-1 text-center'}>
-						<Button onClick={() => setType('login')}>Авторизуватися</Button>
+					<div className={'text-center'}>
+						<Button color='rgba(160, 0, 0, 0.8)' onClick={() => setType('login')}>Авторизуватися</Button>
 					</div>
-					<button
-						className={styles.register}
-						onClick={() => setType('register')}
-					>
-						Зарегиструватися
+					<div className={'text-center'}>
+						<Button color='rgba(0, 120, 0, 0.8)' onClick={() => setType('register')}>Зарегиструватися</Button>
+					</div>
+					<button className={styles.forget} onClick={() => setIsForgotPassword(true)}>Забули пароль
 					</button>
 				</form>
 			)}

@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import Main from '@/images/main/1.jpg'
 import Main2 from '@/images/main/2.jpg'
 import Main3 from '@/images/main/3.jpg'
+import VideoItem from '@/components/video/videoItem'
 
 const Slider: FC = () => {
 	return (
@@ -20,18 +21,10 @@ const Slider: FC = () => {
 			}}
 			className='slider_wf'
 		>
-			<SwiperSlide className='video_item'>
-				<div className='thumbnail'>
-					<Image src={Main} alt='Main' />
-					<time>16:55</time>
-				</div>
-				<div className='author'>Micheal Adams</div>
-				<div className='name'>Day in my life: Summer ...</div>
-				<div className='number_info'>
-					<div className='views'>VIEWS 28.6K</div>
-					<div className='date'>6DS AGO</div>
-				</div>
+			<SwiperSlide>
+				{/*<VideoItem item={}/>*/}
 			</SwiperSlide>
+			
 
 			<SwiperSlide className='video_item'>
 				<div className='thumbnail'>

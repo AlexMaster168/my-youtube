@@ -1,3 +1,4 @@
+
 export interface IUser {
 	id: number | undefined,
 	email?: string,
@@ -7,6 +8,12 @@ export interface IUser {
 	location: string,
 	subscribersCount?: number,
 	videosCount?: number
+}
+
+export interface IUserPassword {
+	email: string,
+	password: string,
+	phone: string
 }
 
 export interface IUserDto {

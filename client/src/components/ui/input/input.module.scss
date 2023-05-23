@@ -1,7 +1,7 @@
 $gray: #797979;
 
 .input {
-    @apply relative w-full block border-b mb-4;
+    @apply relative w-full block border-b mb-5;
 
     >input {
         @apply py-2 w-full;
@@ -12,6 +12,6 @@ $gray: #797979;
 }
 
 .error {
-    @apply absolute -bottom-3 left-0 text-sm w-full text-primary;
+    @apply absolute -bottom-5 left-0 text-sm w-full text-primary;
     font-size: 0.5rem;
 }

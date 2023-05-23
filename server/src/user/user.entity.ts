@@ -34,6 +34,9 @@ export class User {
 	@Column({ unique: true })
 	name: string
 
+	@Column({ unique: true })
+	phone: string
+
 	@Column({ default: false })
 	isVerified: boolean
 

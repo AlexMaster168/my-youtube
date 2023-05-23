@@ -9,6 +9,7 @@ export const API_URL = `${process.env.SERVER_PORT}`
 
 export const api = axios.create({
 	baseURL: API_URL,
+	withCredentials: true,
 	headers: getContentType()
 })
 

@@ -33,18 +33,18 @@ export class VideoService {
 	}
 
 	async getAll(searchTerm?: string, category?: any) {
-		const whereOptions: FindOptionsWhere<Video> = { isPublic: true }
+		const whereOptions: FindOptionsWhere<Video> = { isPublic: true };
 
-		if (searchTerm) whereOptions.name = ILike(`%${searchTerm}%`)
-		if (category) whereOptions.category = category
+		if (searchTerm) whereOptions.name = ILike(`%${searchTerm}%`);
+		if (category) whereOptions.category = category;
 
-		return await this.videoRepo.find({
-			where: whereOptions,
-			order: {
-				createdAt: 'DESC'
-			}
-		})
+		return await this.videoRepo.createQueryBuilder('video')
+			.leftJoinAndSelect('video.user', 'user')
+			.where(whereOptions)
+			.orderBy('video.createdAt', 'DESC')
+			.getMany();
 	}
+
 
 	async getByUserId(userId: number, isPrivate = false) {
 		const whereOptions: FindOptionsWhere<Video> = { user: userId as any }

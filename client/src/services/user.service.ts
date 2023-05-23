@@ -1,10 +1,9 @@
 import { api } from '@/http/interceptors'
-import { IUser, IUserDto } from '@/services/types/user.interface'
-import { useAuth } from '@/hooks/useAuth'
+import { IUser, IUserDto, IUserPassword } from '@/services/types/user.interface'
 
 class UserService {
 	async getProfile(userId: number | undefined) {
-		return await api.get<IUserDto>('/user/profile',{ params: { id: userId }})
+		return await api.get<IUserDto>('/user/profile', { params: { id: userId } })
 	}
 
 	async getMostPopular() {
@@ -12,9 +11,15 @@ class UserService {
 	}
 
 	async updateProfile(userId: number | undefined, body: IUser) {
-		return await api.patch<IUser>(`/user/profile?id=${userId}`, body);
+		return await api.patch<IUser>(`/user/profile?id=${userId}`, body)
 	}
+
+	async forgotPassword(email: string, phone: string, password: string) {
+		const response = await api.patch('/user/forgot', { email, phone, password })
+		return response.data
+	}
+
 }
 
-const userService = new UserService();
+const userService = new UserService()
 export default userService

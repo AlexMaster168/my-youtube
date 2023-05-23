@@ -1,0 +1,16 @@
+.label {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.select {
+    width: 200px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.select option {
+    font-size: 14px;
+}

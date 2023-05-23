@@ -15,6 +15,7 @@
  Канал
  Творческая студия
  Видео
+ Правила
 
 Front-end
  React/Next.js (routing, ssg, seo, image component)
