@@ -1,13 +1,28 @@
 import React, { FC, useState } from 'react'
 import styles from '@/components/layout/Header/forget-password/ForgetPassword.module.scss'
 import Modal from '@/components/ui/modal/Modal'
-import useInput from '@/hooks/useInput'
 import { useMutation } from 'react-query'
-import { IUserPassword } from '@/services/types/user.interface'
-import userService from '@/services/user.service'
 import Alert from '@/components/ui/alert/alert'
+import { AuthService } from '@/services/auth/auth.service'
+import { useForm } from 'react-hook-form'
+import { IAuthPassword } from '@/services/types/auth.interface'
+import Button from '@/components/ui/button/button'
+import { validEmail, validPhone } from '@/components/layout/Header/auth-form/auth-form-interface'
+import Input from '@/components/ui/input/input'
 
-const ForgetPassword: FC = () => {
+interface ForgetPasswordProps {
+	onClose: () => void;
+}
+
+const ForgetPassword: FC<ForgetPasswordProps> = ({ onClose }) => {
+	const {
+		register,
+		formState: { errors },
+		handleSubmit,
+		reset
+	} = useForm<IAuthPassword>({
+		mode: 'onChange'
+	})
 
 	const [showAlert, isShowAlert] = useState(false)
 	const closeAlert = () => isShowAlert(false)
@@ -15,92 +30,99 @@ const ForgetPassword: FC = () => {
 	const [showAlertError, isShowAlertError] = useState(false)
 	const closeAlertError = () => isShowAlertError(false)
 
-	const updatePasswordMutation = useMutation((data: IUserPassword) =>
-		userService.forgotPassword(data.email, data.phone, data.password),
+	const { mutate: forgotMutation } = useMutation(
+		(data: IAuthPassword) =>
+			AuthService.forgotPassword(data.email, data.phone, data.password),
 		{
 			onSuccess: () => {
 				isShowAlert(true)
-				setTimeout(() => {
-					isShowAlert(false)
-				}, 3000)
 			},
 			onError: () => {
 				isShowAlertError(true)
-				setTimeout(() => {
-					isShowAlertError(false)
-				}, 3000)
 			}
-	}
-	);
-
-	const [isModalOpen, setIsModalOpen] = useState(true)
-	const Email = useInput('')
-	const Phone = useInput('')
-	const Password = useInput('')
-
-	const forgotPassword =  () => {
-		try {
-			const updatedUser: IUserPassword = {
-				password: Password.value,
-				phone: Phone.value,
-				email: Email.value,
-			};
-			updatePasswordMutation.mutate(updatedUser);
-		} catch (error) {
-			console.error('Ошибка при обновлении пароля:', error);
 		}
-		setIsModalOpen(false)
-	};
+	)
+	const onSubmit = (data: IAuthPassword) => {
+		forgotMutation(data)
+		reset({
+			phone: '',
+			email: '',
+			password: ''
+		})
+		setTimeout(() => {
+			onClose()
+		}, 2000)
+	}
 
 	return (
 		<>
-			{showAlert && <Alert title='Вітаю' text="Ви успішно змінили пароль" type={'primary'} onClose={closeAlert} />}
-			{showAlertError && <Alert title='Помилка' text="Невірні дані користувача, або старий пароль" onClose={closeAlertError} />}
-			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-				<label className={styles.label} htmlFor='myName'>
-					Email
-				</label>
-				<input
-					className={styles.input}
-					type='text'
-					id='myName'
-					{...Email.bind}
-					pattern='/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'
-					placeholder='Введить email'
+			{showAlert && (
+				<Alert
+					title='Вітаю'
+					text='Ви успішно змінили пароль'
+					type={'primary'}
+					duration={2000}
+					onClose={closeAlert}
 				/>
-				<label className={styles.label} htmlFor='myPhone'>
-					Номер телефону
-				</label>
-				<input
-					className={styles.input}
+			)}
+			{showAlertError && (
+				<Alert
+					title='Помилка'
+					text='Невірні дані користувача'
+					duration={2000}
+					onClose={closeAlertError}
+				/>
+			)}
+			<Modal isOpen={true} onClose={onClose}>
+				<Input
+					{...register('email', {
+						required: true,
+						pattern: {
+							value: validEmail,
+							message: 'Введіть коректний email'
+						}
+					})}
+					placeholder='Email'
+					error={errors.email}
+				/>
+				<Input
+					{...register('phone', {
+						required: true,
+						pattern: {
+							value: validPhone,
+							message: 'Введіть номер телефону +380'
+						}
+					})}
 					type='tel'
-					id='myPhone'
-					{...Phone.bind}
-					pattern='^\+380\d{9}$'
-					placeholder='Введить номер телефону'
+					placeholder='Номер телефону'
+					error={errors.phone}
 				/>
-				<label className={styles.label} htmlFor='myPassword'>
-					Номер телефону
-				</label>
-				<input
-					className={styles.input}
+				<Input
+					{...register('password', {
+						required: true,
+						minLength: {
+							value: 6,
+							message: 'Мінімальна довжина має бути 6 символів'
+						}
+					})}
 					type='password'
-					id='myPassword'
-					{...Password.bind}
-					placeholder='Введить новий пароль'
+					placeholder='Пароль'
+					error={errors.password}
 				/>
-				<button
+				<Button
+					type='button'
 					className={styles.buttons}
-					onClick={forgotPassword}
+					onClick={handleSubmit(onSubmit)}
 				>
 					Змінити пароль
-				</button>
-				<button
+				</Button>
+				<Button
+					type='button'
 					className={`${styles.buttons} ${styles.buttonCancel}`}
-					onClick={() => setIsModalOpen(false)}
+					onClick={onClose}
 				>
-					Відминити
-				</button>
+					Відмінити
+				</Button>
 			</Modal>
 		</>
 	)

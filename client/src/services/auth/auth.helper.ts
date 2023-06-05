@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie'
 import { IAuthData } from '@/services/types/auth.interface'
-import { useAuth } from '@/hooks/useAuth'
 
 
 export const saveTokenToStorage = (accessToken: string) => {

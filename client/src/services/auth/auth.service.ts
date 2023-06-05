@@ -2,8 +2,8 @@ import {
 	removeTokenFromStorage,
 	saveToStorage
 } from '@/services/auth/auth.helper'
-import $api from '@/http/interceptors'
-import { IAuthData } from '@/services/types/auth.interface'
+import $api, { api } from '@/http/interceptors'
+import { IAuthData, IAuthPassword } from '@/services/types/auth.interface'
 
 export const AuthService = {
 	async login(email: string, password: string) {
@@ -35,5 +35,10 @@ export const AuthService = {
 	logout() {
 		removeTokenFromStorage()
 		localStorage.removeItem('user')
+	},
+
+	async forgotPassword(email: string, phone: string, password: string) {
+		const response = await api.patch<IAuthPassword>('auth/forgot', { email, phone, password })
+		return response.data
 	}
 }

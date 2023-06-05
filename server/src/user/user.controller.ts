@@ -32,16 +32,6 @@ export class UserController {
 	async updateUser(@Param('id') id: number, @Body() dto: UserDto) {
 		return await this.userService.updateProfile(id, dto)
 	}
-
-	@Patch('forgot')
-	async updatePassword(
-		@Body('email') email: string,
-		@Body('phone') phone: string,
-		@Body('password') password: string,
-	) {
-		return await this.userService.forgotPassword(email, phone, password)
-	}
-
 	@Get('popular')
 	async getMostPopular() {
 		return this.userService.getMostPopular()

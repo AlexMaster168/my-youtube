@@ -27,7 +27,7 @@ const AuthForm: FC = () => {
 	})
 
 	const { user, setData } = useAuth()
-  const [isForgotPassword, setIsForgotPassword] = useState(false)
+	const [isForgotPassword, setIsForgotPassword] = useState(false)
 	const [showAlert, setShowAlert] = useState(false)
 	const [alertMessage, setAlertMessage] = useState('')
 
@@ -48,9 +48,6 @@ const AuthForm: FC = () => {
 				setShowAlert(true)
 				if (type === 'login') setAlertMessage('Невірні дані для авторизації')
 				else setAlertMessage('Користувач c такими данними вже існує')
-				setTimeout(() => {
-					setShowAlert(false)
-				}, 3000)
 			}
 		}
 	)
@@ -68,7 +65,7 @@ const AuthForm: FC = () => {
 
 	return (
 		<div className={styles.wrapper} ref={ref}>
-			{isForgotPassword && <ForgetPassword/>}
+			{isForgotPassword && <ForgetPassword onClose={() => setIsForgotPassword(false)} />}
 			{showAlert && <Alert title='Помилка' text={alertMessage} onClose={() => setShowAlert(false)} />}
 			{!user && (
 				<button

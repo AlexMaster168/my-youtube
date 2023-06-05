@@ -8,6 +8,7 @@ import {
 } from 'typeorm'
 import { Video as VideoEntity } from '../video/video.entity'
 import { Comment as CommentEntity } from '../comment/comment.entity'
+import { IsMobilePhone } from 'class-validator'
 
 export enum UserRole {
 	User = 'user',
@@ -35,6 +36,7 @@ export class User {
 	name: string
 
 	@Column({ unique: true })
+	@IsMobilePhone(undefined)
 	phone: string
 
 	@Column({ default: false })

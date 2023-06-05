@@ -10,12 +10,6 @@ export interface IUser {
 	videosCount?: number
 }
 
-export interface IUserPassword {
-	email: string,
-	password: string,
-	phone: string
-}
-
 export interface IUserDto {
 	user_avatarPath: string,
 	user_description: string,

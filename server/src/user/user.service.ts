@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { User } from './user.entity'
 import { MoreThan, Repository } from 'typeorm'
-import * as bcrypt from 'bcryptjs'
 import { UserDto } from './dto/user.dto'
 
 @Injectable()
@@ -42,28 +41,6 @@ export class UserService {
 		await this.userRepo.save(user)
 		return
 	}
-
-	async forgotPassword(email, phone, password) {
-		const user = await this.userRepo.findOne({
-			where: {
-				email: email,
-				phone: phone
-			}
-		});
-
-		if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-
-		if (password) {
-			const passwordMatch = await bcrypt.compare(password, user.password);
-			if (!passwordMatch) {
-				throw new HttpException('Wrong password', HttpStatus.UNAUTHORIZED)
-			}
-			user.password = await bcrypt.hash(password, 10);
-			await this.userRepo.save(user)
-			return user;
-		}
-	}
-
 
 	async getMostPopular() {
 		return this.userRepo.find({

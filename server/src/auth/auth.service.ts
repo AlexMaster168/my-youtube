@@ -6,6 +6,7 @@ import { Repository } from 'typeorm'
 import { AuthDto } from './dto/auth.dto'
 import * as bcrypt from 'bcryptjs'
 import { RegisterDto } from './dto/register.dto'
+import { ForgotDto } from './dto/forgot.dto'
 
 @Injectable()
 export class AuthService {
@@ -17,8 +18,8 @@ export class AuthService {
 	}
 
 	async register(dto: RegisterDto): Promise<any> {
-		await this.checkExistence(this.userRepo, 'email', dto.email)
-		await this.checkExistence(this.userRepo, 'name', dto.name)
+		await this.checkExistence(this.userRepo, 'email', dto.email);
+		await this.checkExistence(this.userRepo, 'name', dto.name);
 		const newUser = new User()
 		newUser.email = dto.email
 		newUser.name = dto.name
@@ -67,6 +68,23 @@ export class AuthService {
 		}
 	}
 
+	async forgotPassword(dto: ForgotDto) {
+		const user = await this.userRepo.findOne({
+			where: {
+				email: dto.email
+			}
+		});
+
+		if (!user || user.phone !== dto.phone)  throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+
+		const isPasswordMatching = await bcrypt.compare(dto.password, user.password);
+		if (isPasswordMatching) {
+			throw new HttpException('New password must be different from the old password', HttpStatus.BAD_REQUEST);
+		}
+		user.password = await bcrypt.hash(dto.password, 10)
+		await this.userRepo.save(user);
+	}
+
 	async refreshTokens(refreshToken: string): Promise<any> {
 		try {
 			const decoded = this.jwtService.verify(refreshToken)
@@ -103,13 +121,9 @@ export class AuthService {
 	}
 
 	async checkExistence(repo, field, value) {
-		const existingRecord = await repo.findOne({ where: { [field]: value } })
+		const existingRecord = await repo.findOne({ where: { [field]: value } });
 		if (existingRecord) {
-			const errorMessage =
-				field === 'email'
-					? ' User with this email address is already registered'
-					: ' User with this name is already registered'
-			throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST)
+			throw new HttpException('User with this ' + field + ' is already registered', HttpStatus.BAD_REQUEST);
 		}
 	}
 

@@ -5,3 +5,9 @@ export interface IAuthData {
 	} | null
 	accessToken: string
 }
+
+export interface IAuthPassword {
+	email: string,
+	password: string,
+	phone: string
+}
