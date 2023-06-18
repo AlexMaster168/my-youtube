@@ -1,5 +1,7 @@
-$default-font: "Noto Sans JP", sans-serif;
-$light_gray: rgba(198, 198, 198, .58);
-$gray: #A4A4A4;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+$default-font: 'Roboto', sans-serif;
+$light_gray: #C0C0C0;
+$gray: #fff;
+$fon: linear-gradient(to bottom, hsl(204, 88%, 43%), hsl(53, 100%, 53% - 10%));
 $red: #F4003F;
 $gutter40: 35px;

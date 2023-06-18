@@ -5,12 +5,8 @@ export default function Document() {
 		<Html lang='en'>
 			<Head>
 				<title>Youtube</title>
-				<link
-					href='https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap'
-					rel='stylesheet'
-				/>
 				<link rel='shortcut icon' href='/favicon.png' type='image/png' />
-				<meta name='description' content='Youtube v2.0 - Best video' />
+				<meta name='description' content='UaTube - Best Ukrainian Video' />
 				<meta
 					name='viewport'
 					content='width=device-width, initial-scale=1, maximum-scale=1'

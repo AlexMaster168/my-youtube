@@ -1,10 +1,16 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { FC } from 'react'
 import Slider from '@/components/Slider'
 import Main3 from '@/images/main/3.jpg'
 import Avatar from '@/images/main/avatar.jpg'
+import { IVideoDto } from '@/services/types/video.interface'
 
-const WeeklyFeatured = () => {
+interface IWeeklyFeatured {
+	weeklyVideos: IVideoDto[]
+	randomVideo: IVideoDto
+}
+
+const WeeklyFeatured: FC<IWeeklyFeatured> = ({ weeklyVideos, randomVideo }) => {
 	return (
 		<div className='weekly_featured'>
 			<div className='info_wf'>
@@ -16,7 +22,7 @@ const WeeklyFeatured = () => {
 					consectetur minima vitae. Facilis nostrum cumque illum fugit rem, nam
 					consectetur!
 				</div>
-				<Slider />
+				<Slider videos={weeklyVideos} />
 			</div>
 			<div className='top_video'>
 				<div className='video_item'>

@@ -14,5 +14,16 @@ export interface IVideo {
 	updatedAt: string,
 }
 
-export interface IVideoDto extends Pick<IVideo, 'thumbnailPath' | 'name' | 'description' | 'videoPath' | 'isPublic'> {
+export interface IVideoDto {
+	video_id: number,
+	video_likes: number,
+	video_videoPath: string,
+	video_description: string,
+	video_isPublic?: boolean,
+	user_name: string,
+  video_name: string,
+	video_views: number,
+	video_thumbnailPath: string,
+	video_createdAt: string,
+	video_updatedAt: string,
 }

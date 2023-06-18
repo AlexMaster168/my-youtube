@@ -1,0 +1,32 @@
+﻿+ Авторизация, Регистрация
+Загрузка видео
++ Слайдер
+Поиск
+Количество понравившихся, Просмотры
+Плеер
+Комментарии
+Творческая студия
+  Список видео
+  Редактор видео
+
+Страницы
+ + Главная
+ Канал
+ Творческая студия
+ Видео
+
+Front-end
+ React/Next.js (routing, ssg, seo, image component)
+ Axios/React Query (search)
+ AuthContext
+ Tailwind
+ TypeScript
+ React Hook Form
+
+Back-end
+ Nest.js
+ Postgresql
+ TypeOrm
+ JWT
+
+

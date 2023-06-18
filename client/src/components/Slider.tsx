@@ -1,15 +1,12 @@
-import Image from 'next/image'
 import React, { FC } from 'react'
 import { Autoplay, Navigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import Main from '@/images/main/1.jpg'
-import Main2 from '@/images/main/2.jpg'
-import Main3 from '@/images/main/3.jpg'
 import VideoItem from '@/components/video/videoItem'
+import { IVideoDto } from '@/services/types/video.interface'
 
-const Slider: FC = () => {
+const Slider: FC<{ videos: IVideoDto[] }> = ({ videos }) => {
 	return (
 		<Swiper
 			modules={[Autoplay, Navigation]}
@@ -21,36 +18,11 @@ const Slider: FC = () => {
 			}}
 			className='slider_wf'
 		>
-			<SwiperSlide>
-				{/*<VideoItem item={}/>*/}
-			</SwiperSlide>
-			
-
-			<SwiperSlide className='video_item'>
-				<div className='thumbnail'>
-					<Image src={Main2} alt='Main2' />
-					<time>07:23</time>
-				</div>
-				<div className='author'>Dollie Cross</div>
-				<div className='name'>Day in my life: Summer ...</div>
-				<div className='number_info'>
-					<div className='views'>VIEWS 26.7K</div>
-					<div className='date'>10DS AGO</div>
-				</div>
-			</SwiperSlide>
-
-			<SwiperSlide className='video_item'>
-				<div className='thumbnail'>
-					<Image src={Main3} alt='main3' />
-					<time>16:55</time>
-				</div>
-				<div className='author'>Micheal Adams</div>
-				<div className='name'>Day in my life: Summer ...</div>
-				<div className='number_info'>
-					<div className='views'>VIEWS 28.6K</div>
-					<div className='date'>6DS AGO</div>
-				</div>
-			</SwiperSlide>
+			{videos?.map(video => (
+				<SwiperSlide key={video.video_id}>
+					<VideoItem item={video} />
+				</SwiperSlide>
+			))}
 		</Swiper>
 	)
 }

@@ -1,5 +1,5 @@
 import { api } from '@/http/interceptors'
-import { IVideo } from '@/services/types/video.interface'
+import { IVideo, IVideoDto } from '@/services/types/video.interface'
 
 class VideoService {
 	async getVideosByUser(userId: number | undefined) {
@@ -15,7 +15,7 @@ class VideoService {
 	}
 
 	async getAll() {
-		return await api.get<IVideo[]>('/video')
+		return await api.get<IVideoDto[]>('/video')
 	}
 
 	async getMostPopular() {

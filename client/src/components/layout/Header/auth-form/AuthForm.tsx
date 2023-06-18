@@ -68,77 +68,80 @@ const AuthForm: FC = () => {
 			{isForgotPassword && <ForgetPassword onClose={() => setIsForgotPassword(false)} />}
 			{showAlert && <Alert title='Помилка' text={alertMessage} onClose={() => setShowAlert(false)} />}
 			{!user && (
-				<button
-					className={stylesIcons.button}
-					onClick={() => setIsShow(!isShow)}
-				>
-					<FaUserCircle fill='#A4A4A4' />
-				</button>
-			)}
-			{isShow && (
-				<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-					{type === 'register' && (
-						<>
-							<Input
-								{...register('name', {
-									required: true,
-									minLength: {
-										value: 3,
-										message: 'Мін довжина повинна бути 3 символи'
-									}
-								})}
-								placeholder="Ім'я"
-								error={errors.name}
-							/>
-
-							<Input
-								{...register('phone', {
-									required: true,
-									pattern: {
-										value: validPhone,
-										message: 'Введить номер телефону +380'
-									}
-								})}
-								type='tel'
-								placeholder='Номер телефону'
-								error={errors.phone}
-							/>
-						</>
-					)}
-					<Input
-						{...register('email', {
-							required: true,
-							pattern: {
-								value: validEmail,
-								message: 'Введить корректний email'
-							}
-						})
-						}
-						placeholder='Email'
-						error={errors.email}
-					/>
-					<Input
-						{...register('password', {
-							required: true,
-							minLength: {
-								value: 6,
-								message: 'Мин длина мусит бути 6 символів'
-							}
-						})}
-						type='password'
-						placeholder='Пароль'
-						error={errors.password}
-					/>
-					<div className={'text-center'}>
-						<Button color='rgba(160, 0, 0, 0.8)' onClick={() => setType('login')}>Авторизуватися</Button>
-					</div>
-					<div className={'text-center'}>
-						<Button color='rgba(0, 120, 0, 0.8)' onClick={() => setType('register')}>Зарегиструватися</Button>
-					</div>
-					<button className={styles.forget} onClick={() => setIsForgotPassword(true)}>Забули пароль
+					<button
+						className={stylesIcons.button}
+						onClick={() => setIsShow(!isShow)}
+					>
+						<FaUserCircle fill='#FFEC00' />
 					</button>
-				</form>
-			)}
+			)
+			}
+			{
+				isShow && (
+					<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+						{type === 'register' && (
+							<>
+								<Input
+									{...register('name', {
+										required: true,
+										minLength: {
+											value: 3,
+											message: 'Мін довжина повинна бути 3 символи'
+										}
+									})}
+									placeholder="Ім'я"
+									error={errors.name}
+								/>
+
+								<Input
+									{...register('phone', {
+										required: true,
+										pattern: {
+											value: validPhone,
+											message: 'Введить номер телефону +380'
+										}
+									})}
+									type='tel'
+									placeholder='Номер телефону'
+									error={errors.phone}
+								/>
+							</>
+						)}
+						<Input
+							{...register('email', {
+								required: true,
+								pattern: {
+									value: validEmail,
+									message: 'Введить корректний email'
+								}
+							})
+							}
+							placeholder='Email'
+							error={errors.email}
+						/>
+						<Input
+							{...register('password', {
+								required: true,
+								minLength: {
+									value: 6,
+									message: 'Мин длина мусит бути 6 символів'
+								}
+							})}
+							type='password'
+							placeholder='Пароль'
+							error={errors.password}
+						/>
+						<div className={'text-center'}>
+							<Button color='rgba(160, 0, 0, 0.8)' onClick={() => setType('login')}>Авторизуватися</Button>
+						</div>
+						<div className={'text-center'}>
+							<Button color='rgba(0, 120, 0, 0.8)' onClick={() => setType('register')}>Зарегиструватися</Button>
+						</div>
+						<button className={styles.forget} onClick={() => setIsForgotPassword(true)}>Забули пароль
+						</button>
+					</form>
+				)
+			}
 		</div>
 	)
 }

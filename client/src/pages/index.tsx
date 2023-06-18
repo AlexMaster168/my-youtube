@@ -6,24 +6,24 @@ import Recommended from '@/components/Recommended'
 import RightSide from '@/components/layout/RightSide/RightSide'
 import Layout from '@/components/layout/Layout'
 import VideoService from '@/services/video.service'
-import { IVideo } from '@/services/types/video.interface'
+import { IVideo, IVideoDto } from '@/services/types/video.interface'
 import { IUser } from '@/services/types/user.interface'
 import { shuffle } from 'lodash'
 
 interface IHome {
 	newVideos: IVideo[],
-	weeklyVideos: IVideo[],
-	randomVideo: IVideo,
-	topVideo: IVideo,
+	weeklyVideos: IVideoDto[],
+	randomVideo: IVideoDto,
+	topVideo: IVideoDto,
 	topChannels: IUser[]
 }
 
 const HomePage: NextPage<IHome> = (item) => {
 	return (
-		<Layout title='Youtube Home'>
+		<Layout title='UaTube Home'>
 			<div id='wrapper_content'>
 				<div className='left_side'>
-					<WeeklyFeatured />
+					<WeeklyFeatured weeklyVideos={item.weeklyVideos} randomVideo={item.randomVideo} />
 					<Line />
 					<Recommended />
 				</div>

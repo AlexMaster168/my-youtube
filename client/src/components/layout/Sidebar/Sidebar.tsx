@@ -26,9 +26,9 @@ const Sidebar: FC | null = () => {
 			<Line/>
 			<Menu/>
 			<button id='logout_btn' onClick={() => handleLogout()}>
-				Logout
+				Вийти
 			</button>
-			<div className='copy'>AlexMaster © 2023 Youtube</div>
+			<div className='copy'>AlexMaster © 2023 UaTube</div>
 		</section>
 	)
 }

@@ -62,6 +62,7 @@ body {
     font-size: 14px;
     min-width: 320px;
     position: relative;
+    background: $fon;
     line-height: 1.4;
     font-family: $default-font;
     overflow-x: hidden;
@@ -86,7 +87,7 @@ img {
     .sidebar {
         width: 18%;
         padding: 25px;
-        background-color: #F8F8F8;
+        background: $fon;
 
         > .logo {
             display: block;
@@ -296,7 +297,7 @@ img {
 
         .copy {
             font-size: 14px;
-            color: $gray;
+            color: black;
         }
     }
 
@@ -310,6 +311,7 @@ img {
         #header {
             padding: 15px 25px;
             position: relative;
+            background: $fon;
             border-bottom: 1px solid $light_gray;
 
             .search_top {

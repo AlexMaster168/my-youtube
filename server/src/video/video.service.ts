@@ -40,11 +40,12 @@ export class VideoService {
 
 		return await this.videoRepo.createQueryBuilder('video')
 			.leftJoinAndSelect('video.user', 'user')
+			.select('video')
+			.addSelect('user.name')
 			.where(whereOptions)
 			.orderBy('video.createdAt', 'DESC')
-			.getMany();
+			.getRawMany();
 	}
-
 
 	async getByUserId(userId: number, isPrivate = false) {
 		const whereOptions: FindOptionsWhere<Video> = { user: userId as any }

@@ -1,0 +1,10 @@
+TODO:
+ x User, Video, Comments
+ x Authorization
+ x Get profile, Update profile
+ x Get user, most popular channel by subscribers
+ x Video add, edit, remove, list by userID[for all] [user private]
+ x Get all videos(with categories), most popular by view, get by id with comment & channel info
+ x Update Likes, views
+ x Comments [add], get byVideoId
+ x Video upload

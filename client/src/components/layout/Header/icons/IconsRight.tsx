@@ -10,7 +10,7 @@ const IconsRight: FC = () => {
 		<div className={styles.icons}>
 			{!!user && (
 				<button className={styles.button}>
-					<BsPlusCircleFill fill='#CD3A42' />
+					<BsPlusCircleFill fill='#FFEC00' />
 				</button>
 			)}
 			<AuthForm />
