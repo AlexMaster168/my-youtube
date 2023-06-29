@@ -38,13 +38,13 @@ export const getStaticProps: GetStaticProps = async () => {
 		const { data: newVideos } = await VideoService.getAll()
 		const randomVideo = {}
 		const topVideo = {}
-		const topChannels = {}
+		const topChannels: never[] = []
 
 		return {
 			props: {
 				newVideos,
-				weeklyVideos: shuffle(newVideos),
-				randomVideo,
+				weeklyVideos: shuffle(newVideos).slice(0, 5),
+				randomVideo: shuffle(newVideos)[0],
 				topVideo,
 				topChannels
 			},

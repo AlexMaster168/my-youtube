@@ -1,9 +1,7 @@
-import Image from 'next/image'
 import React, { FC } from 'react'
 import Slider from '@/components/Slider'
-import Main3 from '@/images/main/3.jpg'
-import Avatar from '@/images/main/avatar.jpg'
 import { IVideoDto } from '@/services/types/video.interface'
+import VideoItem from "@/components/video/videoItem";
 
 interface IWeeklyFeatured {
 	weeklyVideos: IVideoDto[]
@@ -14,41 +12,15 @@ const WeeklyFeatured: FC<IWeeklyFeatured> = ({ weeklyVideos, randomVideo }) => {
 	return (
 		<div className='weekly_featured'>
 			<div className='info_wf'>
-				<div className='sub_name'>Weekly Featured</div>
-				<h1>Hello, Summer Vacation!</h1>
+				<div className='sub_name'>Недільні рекомендації</div>
+				<h1>Вітаю, Літній Відпочинок!</h1>
 				<div className='descr'>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam
-					harum placeat ullam vel non, quisquam totam, doloremque expedita odit
-					consectetur minima vitae. Facilis nostrum cumque illum fugit rem, nam
-					consectetur!
+					Це підборка недільних рекомендацій, які може прийдуть вам до вподоби
 				</div>
 				<Slider videos={weeklyVideos} />
 			</div>
 			<div className='top_video'>
-				<div className='video_item'>
-					<div className='thumbnail'>
-						<Image src={Main3} alt='Main3' />
-						<time>28:32</time>
-						<div className='avatar'>
-							<Image src={Avatar} alt='avatar' width={37} height={37} />
-						</div>
-					</div>
-					<div className='author'>Warren Munoz</div>
-					<div className='name'>
-						Lake House Vacation! Boating, Tubing & More!
-					</div>
-					<div className='descr'>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus
-						animi aut vel alias voluptate, odio. Tempora sequi et itaque enim a,
-						aut excepturi adipisci quam, aspernatur, eaque obcaecati dolor
-						tenetur :)
-					</div>
-					<div className='number_info'>
-						<div className='views'>VIEWS 29.2K</div>
-						<div className='likes'>LIKES 1.6K</div>
-						<div className='date'>3DS AGO</div>
-					</div>
-				</div>
+				<VideoItem item={randomVideo} isBig={true}/>
 			</div>
 		</div>
 	)

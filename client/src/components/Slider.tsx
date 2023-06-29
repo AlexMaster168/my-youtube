@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
-import { Autoplay, Navigation } from 'swiper'
+import { Autoplay } from 'swiper'
 import 'swiper/css'
-import 'swiper/css/navigation'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import VideoItem from '@/components/video/videoItem'
 import { IVideoDto } from '@/services/types/video.interface'
@@ -9,12 +8,11 @@ import { IVideoDto } from '@/services/types/video.interface'
 const Slider: FC<{ videos: IVideoDto[] }> = ({ videos }) => {
 	return (
 		<Swiper
-			modules={[Autoplay, Navigation]}
-			spaceBetween={7}
+			modules={[Autoplay]}
+			spaceBetween={15}
 			slidesPerView={2}
-			navigation={true}
 			autoplay={{
-				delay: 4500
+				delay: 2500
 			}}
 			className='slider_wf'
 		>
